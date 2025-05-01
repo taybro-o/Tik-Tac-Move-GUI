@@ -14,7 +14,7 @@ public class Player {
 	
 	Player(int number) {
 		this.playerNumber = number;
-		this.getDetails();
+		this.getDetails(); //GETS PLAYER NAME AND IF NECESSARY, PLAYER MA
 	}
 	
 	Player(int number, char mark) {
@@ -22,7 +22,8 @@ public class Player {
 		this.mark = mark == 'X' ? 'O' : 'X';
 		this.getDetails();
 	}
-	
+
+	// NEEDS A COMPLETE GUI BASED REWRITE
 	void getDetails() {
 		
 		System.out.print("Enter name for Player " + playerNumber + ": ");
@@ -40,17 +41,18 @@ public class Player {
 		}
 		System.out.println();
 	}
-	
+
+	// // NEEDS A COMPLETE GUI BASED REWRITE
 	//fetches player move. doesn't verify.
 	void getMove(int moveCount) {
 		
 		if(Game.checkGameStatus()) {
-			if(moveCount < 6) {
+			if(moveCount < 6) { //DIFFERENT GUI CODE FOR DIRECT CLICK TO PLACE PIECE
 				System.out.print(name + " " + mark + ", enter your move (\"ROW COL <<<>>> 1 2\" range 1 to 3 both): ");
 				x_cord = sc.nextInt(); y_cord = sc.nextInt();
 			}
 			
-			else {
+			else { //DIFFERENT GUI CODE WITH FIRST CLICK HIGHLIGHTING PIECE TO MOVE, SECOND CLICK TO GET WHERE TO MOVE THE PIECE
 				System.out.print(name + " " + mark + ", which piece you want to move? (\"ROW COL <<<>>> 1 2\" range 1 to 3 both): ");
 				previous_x_cord = sc.nextInt(); previous_y_cord = sc.nextInt();
 				

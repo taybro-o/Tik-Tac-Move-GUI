@@ -1,6 +1,6 @@
 import java.lang.Math;
 public class Board {
-	
+
 	int moveCount = 0; //even value means p1 turn, odd value means p2 turn.
 	final int SIZE = 3;
 	char board[][] = {      {'.','.','.'}, //'.' represents an empty space
@@ -8,17 +8,19 @@ public class Board {
 							{'.','.','.'}  };
 	
 	Player p1, p2;
-	boolean turnTwice = false;
+	boolean turnTwice = false; //flag for a game rule. when active:
+	// allows the player to skip enemy turn simply by incrementing moveCount.
 	
 	
 	Board(Player p1, Player p2) {
 		this.p1 = p1;
 		this.p2 = p2;
 	}
-	
+
+	// NEEDS A COMPLETE GUI BASED REWRITE
 	void displayBoard() {
 		
-		Game.showTitle();
+		Game.showTitleScreen(); //AFTER GUI REWRITE, THIS WILL BECOME OBSOLETE
 		
 		System.out.println("=".repeat(35));
 		System.out.println(p1.name + " " + p1.mark + " ".repeat(5) + p2.name + " " + p2.mark);
@@ -39,7 +41,8 @@ public class Board {
 	// Checks bound for initial and advance game.
 	//If this returns false = input good! else input is wrong! try again prompt to player. 
 	//after 2 bad inputs skip turn as penalty.
-	
+
+	 // NEEDS A COMPLETE GUI BASED REWRITE
 	boolean validateMove(Player player) {
 		
 		player.x_cord -= 1; player.y_cord-= 1; player.previous_x_cord -= 1; player.previous_y_cord-= 1; //adjust input for array bounds. 
@@ -57,7 +60,10 @@ public class Board {
 			else {System.out.println("Invalid input, try again.\n"); return true;}
 		}
 	}
-	
+
+	//AFTER GUI IMPLEMENTATION WE WOULD ONLY HAVE TO MATCH THE GUI COMPONENTS REPRESENTING CELLS WITH THE ARRAY'S ROW AND COLUMN
+	//PROBABLY JUST MAKE A METHOD THAT DOES THAT WITH IFS AND CALL IT WHERE IT CURRENTLY PLACES PIECE.
+	//BY GUI COMPONENTS I MEAN: TOP_LEFT = [0][0] TOP_MIDDLE = [0][1] TOP_RIGHT = [0][2] AND SO ON...
 	void placePiece(Player player) {
 		
 		//initial game
@@ -68,7 +74,7 @@ public class Board {
 		else {
 			int temp_x_cord = player.previous_x_cord - player.x_cord, temp_y_cord = player.previous_y_cord - player.y_cord;
 			
-			boolean conditionsMet = false;
+			boolean conditionsMet = false; //flag for twiceTurn, if none of the valid move executes it remains false and penalty is incremented (in player piece).
 			
 			if(temp_y_cord == 0) {   //--> it means column is same
 				//row switching logic.
@@ -148,16 +154,17 @@ public class Board {
 				board[player.previous_x_cord][player.previous_y_cord] = '.';
 			}
 			
-			//prompt user to accept or decline turnTwice, if yes +1 moveCount to skip the enemy's turn.
+			//after player plays their move, prompt user to accept or decline turnTwice, if yes +1 moveCount to skip the enemy's turn.
+			// and reset twice turn regardless of accept or decline as players can't stack these to break game.
 			if(turnTwice) {
-				System.out.print("Twice turn availible, accept twice turn? (Y/N) : ");
+				System.out.print("Twice turn available, accept twice turn? (Y/N) : ");
 				char choice = player.sc.next().charAt(0);
 				if(choice == 'Y' || choice == 'y') {moveCount++;}
 				else {System.out.print("you chose to skip twice turn.");}
 				turnTwice = false;
 			} 
 			
-			//show in GUI you got +1 penalty, totaling 2 skips your turn and reseting it to 0. 
+			//show in GUI you got +1 penalty, totaling 2 allows enemy to skip your turn, and after it resets to 0.
 			if(conditionsMet == false) {
 				player.penaltyCount += 1;
 				System.out.println("You have played an illegal move, so +1 penalty, totaling 2 gives your opponent choice to skip your turn! [current penalty count: " + player.penaltyCount + "]\n");
@@ -174,7 +181,7 @@ public class Board {
 		}	
 	}
 	
-	
+	//REMAINS SAME AFTER GUI REWORK.
 	void checkWIN(Player player) {
 		for(int i = 0; i < SIZE; i++) {
 			// check for row win
@@ -201,32 +208,32 @@ public class Board {
 	void playGame() {
 		// player 1 move
 		if (moveCount % 2 == 0) {
-			boolean needsInput = true; //Variable to determine if the input is correct
-			
-			//For move input
-			if(Game.checkGameStatus()) {
+			boolean needsInput = true; //flag to determine if the input is correct
+
+			//For move input,
+			if(Game.checkGameStatus()) { //removing this redundant looking "if" might break the game.
 				do {
-					p1.getMove(moveCount);
-					needsInput = validateMove(p1);
-				} while(needsInput);
+					p1.getMove(moveCount); // gets player move for both game phases.
+					needsInput = validateMove(p1); // validates move and if input is correct sets needsInput = false;
+				} while(needsInput); // loops until correct input is given.
 			}
 			placePiece(p1); //placing piece on the board
-			checkWIN(p1);
+			checkWIN(p1);// checks for win immediately after placing the piece.
 		}
 					
 		//player 2 move
 		else {
-			boolean needsInput = true; //Variable to determine if the input is correct
-			
+			boolean needsInput = true; //flag to determine if the input is correct
+
 			//For move input
-			if(Game.checkGameStatus()) {
+			if(Game.checkGameStatus()) { //removing this redundant looking "if" might break the game
 				do {
-					p2.getMove(moveCount);
-					needsInput = validateMove(p2);
-				} while(needsInput);
+					p2.getMove(moveCount);// gets player move for both game phases.
+					needsInput = validateMove(p2); // validates move and if input is correct sets needsInput = false;
+				} while(needsInput); // loops until correct input is given.
 			}
 			placePiece(p2); //placing piece on the board
-			checkWIN(p2);
+			checkWIN(p2);// checks for win immediately after placing the piece.
 		}
 	}
 	
