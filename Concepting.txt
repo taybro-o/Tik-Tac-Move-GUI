@@ -1,0 +1,7 @@
+Game has board, players, moveCount, gameStatus.
+board has player and enemy pieces
+player has name and symbol
+
+game does showTitle(), playsGame(), exitsGame()
+board does validateMove(), placePiece(), checkWin()
+player does makesMove()
