@@ -26,6 +26,14 @@ public class Game {
 		startGameLoop(gameBoard); // main game loop!
 	}
 
+	private static Board createBoard() {
+		// Creates pieces for P1, P2. uses aggregation (gives objects in parameter and not directly creating inside non-parameterized constructor. not composition)
+		Player player1 = new Player(1);
+		Player player2 = new Player(2, player1.mark);
+
+		return new Board(player1, player2);
+	}
+
 	private static void startGameLoop(Board gameBoard) {
 		//Empty board
 		gameBoard.displayBoard(); //I THINK THIS WILL STAY HERE EVEN AFTER GUI REWORK.
@@ -37,14 +45,6 @@ public class Game {
 			}
 			gameBoard.displayBoard(); //displays current game progress after previous player's move.
 		} while(gameStatus); // Loops the game until winner is found.
-	}
-
-	private static Board createBoard() {
-		// Creates pieces for P1, P2. uses aggregation (gives objects in parameter and not directly creating inside non-parameterized constructor. not composition)
-		Player player1 = new Player(1);
-		Player player2 = new Player(2, player1.mark);
-
-        return new Board(player1, player2);
 	}
 
 
