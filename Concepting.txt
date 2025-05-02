@@ -1,7 +1,10 @@
-Game has board, players, moveCount, gameStatus.
-board has player and enemy pieces
-player has name and symbol
+Game has gameBoard has players.
+board has player and enemy.
+player has name, mark, x_cord, y_cord, previous_x_cord, previous_y_cord.
 
 game does showTitle(), playsGame(), exitsGame()
 board does validateMove(), placePiece(), checkWin()
 player does makesMove()
+
+
+beya bhi ahain baaki alaye khera khera
