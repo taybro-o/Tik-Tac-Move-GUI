@@ -8,7 +8,7 @@ public class Board {
 							{'.','.','.'}  };
 	
 	Player p1, p2;
-	boolean turnTwice = false; //flag for a game rule. when active:
+	boolean twiceTurn = false; //flag for a game rule. when active:
 	// allows the player to skip enemy turn simply by incrementing moveCount.
 	
 	
@@ -153,34 +153,46 @@ public class Board {
 				board[player.x_cord][player.y_cord] = player.mark;
 				board[player.previous_x_cord][player.previous_y_cord] = '.';
 			}
-			
-			//after player plays their move, prompt user to accept or decline turnTwice, if yes +1 moveCount to skip the enemy's turn.
+
+			//after player plays their move, prompt user to accept or decline twiceTurn, if yes +1 moveCount to skip the enemy's turn.
 			// and reset twice turn regardless of accept or decline as players can't stack these to break game.
-			if(turnTwice) {
-				System.out.print("Twice turn available, accept twice turn? (Y/N) : ");
-				char choice = player.sc.next().charAt(0);
-				if(choice == 'Y' || choice == 'y') {moveCount++;}
-				else {System.out.print("you chose to skip twice turn.");}
-				turnTwice = false;
-			} 
-			
-			//show in GUI you got +1 penalty, totaling 2 allows enemy to skip your turn, and after it resets to 0.
-			if(conditionsMet == false) {
-				player.penaltyCount += 1;
-				System.out.println("You have played an illegal move, so +1 penalty, totaling 2 gives your opponent choice to skip your turn! [current penalty count: " + player.penaltyCount + "]\n");
-				
-				//show in GUI penalty has been hit and enemy has been given his turn twice.
-				if(player.penaltyCount % 2 == 0) {
-					turnTwice = true;
-					System.out.println("penalty has been hit! your opponent will have a choice to skip your next turn!");
-					player.penaltyCount = 0;
-				} 
-			} 
-			
+			//NEEDS A COMPLETE GUI BASED REWRITE
+			handleTwiceTurn(player);
+
+			//gives penalty on illegal (if the above move conditions aren't executed.) moves , totaling to gives enemy twiceTurn.
+			//NEEDS A COMPLETE GUI BASED REWRITE
+			handlePenalty(player, conditionsMet);
+
 			moveCount++; //normal moveCount++	
 		}	
 	}
-	
+
+	private void handleTwiceTurn(Player player) {
+		if(twiceTurn) {
+			displayBoard();
+			System.out.print("Twice turn available, accept twice turn? (Y/N) : ");
+			char choice = player.sc.next().charAt(0);
+			if(choice == 'Y' || choice == 'y') {moveCount++;}
+			else {System.out.print("you chose to skip twice turn.");}
+			twiceTurn = false;
+		}
+	}
+
+	//show in GUI you got +1 penalty, totaling 2 allows enemy to skip your turn, and after it resets to 0.
+	private void handlePenalty(Player player, boolean conditionsMet) {
+		if(conditionsMet == false) {
+			player.penaltyCount += 1;
+			System.out.println("You have played an illegal move, so +1 penalty, totaling 2 gives your opponent choice to skip your turn! [current penalty count: " + player.penaltyCount + "]\n");
+			
+			//show in GUI penalty has been hit and enemy has been given his turn twice.
+			if(player.penaltyCount % 2 == 0) {
+				twiceTurn = true;
+				System.out.println("penalty has been hit! your opponent will have a choice to skip your next turn!");
+				player.penaltyCount = 0;
+			} 
+		}
+	}
+
 	//REMAINS SAME AFTER GUI REWORK.
 	void checkWIN(Player player) {
 		for(int i = 0; i < SIZE; i++) {
@@ -207,34 +219,24 @@ public class Board {
 	
 	void playGame() {
 		// player 1 move
-		if (moveCount % 2 == 0) {
-			boolean needsInput = true; //flag to determine if the input is correct
-
-			//For move input,
-			if(Game.checkGameStatus()) { //removing this redundant looking "if" might break the game.
-				do {
-					p1.getMove(moveCount); // gets player move for both game phases.
-					needsInput = validateMove(p1); // validates move and if input is correct sets needsInput = false;
-				} while(needsInput); // loops until correct input is given.
-			}
-			placePiece(p1); //placing piece on the board
-			checkWIN(p1);// checks for win immediately after placing the piece.
-		}
-					
-		//player 2 move
-		else {
-			boolean needsInput = true; //flag to determine if the input is correct
-
-			//For move input
-			if(Game.checkGameStatus()) { //removing this redundant looking "if" might break the game
-				do {
-					p2.getMove(moveCount);// gets player move for both game phases.
-					needsInput = validateMove(p2); // validates move and if input is correct sets needsInput = false;
-				} while(needsInput); // loops until correct input is given.
-			}
-			placePiece(p2); //placing piece on the board
-			checkWIN(p2);// checks for win immediately after placing the piece.
-		}
+		if(moveCount % 2 == 0)
+			playTurn(p1);
+		else
+			playTurn(p2);
 	}
-	
+
+	private void playTurn(Player currentPlayer) {
+		boolean needsInput = true; //flag to determine if the input is correct
+
+		//For move input,
+		if(Game.checkGameStatus()) { //removing this redundant looking "if" might break the game.
+			do {
+				currentPlayer.getMove(moveCount); // gets player move for both game phases.
+				needsInput = validateMove(currentPlayer); // validates move and if input is correct sets needsInput = false;
+			} while(needsInput); // loops until correct input is given.
+		}
+		placePiece(currentPlayer); //placing piece on the board
+		checkWIN(currentPlayer);// checks for win immediately after placing the piece.
+	}
+
 }

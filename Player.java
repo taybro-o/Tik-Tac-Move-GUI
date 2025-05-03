@@ -42,7 +42,7 @@ public class Player {
 		System.out.println();
 	}
 
-	// // NEEDS A COMPLETE GUI BASED REWRITE
+	// NEEDS A COMPLETE GUI BASED REWRITE
 	//fetches player move. doesn't verify.
 	void getMove(int moveCount) {
 		
