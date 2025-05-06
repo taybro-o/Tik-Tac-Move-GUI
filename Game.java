@@ -1,9 +1,14 @@
 
 public class Game {
-	
-	
+	//plays game!
+	public static void main(String[] args) {
+		showTitleScreen(); // DISPLAYS SIMPLE GAME TITLE SCREEN WITH A START GAME BUTTON
+		Board gameBoard = createBoard(); // creates the game board.
+		startGameLoop(gameBoard); // main game loop!
+	}
+
 	static private boolean gameStatus = true; // true means game is on, false means game has ended and a winner decided.
-	
+
 	static public boolean checkGameStatus() {
 		return gameStatus;
 	}
@@ -15,15 +20,8 @@ public class Game {
 	    System.out.print("*    Welcome to Tic-Tac-Move!     *\n");
 	    System.out.print(" *                               *\n");
 	    System.out.print("  *******************************\n");
-	    
+
 	    System.out.println();
-	}
-	
-	//plays game!
-	public static void main(String[] args) {
-		showTitleScreen(); // DISPLAYS SIMPLE GAME TITLE SCREEN WITH A START GAME BUTTON
-		Board gameBoard = createBoard(); // creates the game board.
-		startGameLoop(gameBoard); // main game loop!
 	}
 
 	private static Board createBoard() {
@@ -35,7 +33,7 @@ public class Game {
 	}
 
 	private static void startGameLoop(Board gameBoard) {
-		//Empty board
+		//display empty board once before game starts official and asks player 1 for move
 		gameBoard.displayBoard(); //I THINK THIS WILL STAY HERE EVEN AFTER GUI REWORK.
 
 		do {
