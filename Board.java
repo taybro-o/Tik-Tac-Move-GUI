@@ -4,7 +4,7 @@ public class Board {
 
     int moveCount = 0; //even value means p1 turn, odd value means p2 turn.
     final int SIZE = 3;
-    char board[][] = {
+    char[][] board = {
 
             {'.', '.', '.'}, //'.' represents an empty space
             {'.', '.', '.'},
@@ -56,7 +56,7 @@ public class Board {
         }
     }
 
-    //
+    //does a full player turn from getting move to validating and placing.
     private void playTurn(Player currentPlayer) {
         boolean needsInput = true; //flag to determine if the input is correct
 
@@ -70,10 +70,9 @@ public class Board {
         placePiece(currentPlayer); //placing piece on the board
 
     }
+
     // Checks bound for initial and advance game.
     //If this returns false = input good! else input is wrong! try again prompt to player.
-    //after 2 bad inputs skip turn as penalty.
-
     // NEEDS A COMPLETE GUI BASED REWRITE
     boolean validateMove(Player player) {
 
@@ -112,7 +111,7 @@ public class Board {
     void placePiece(Player player) {
 
         //initial game
-        if (moveCount < 6) {
+        if(moveCount < 6) {
             board[player.x_cord][player.y_cord] = player.mark;
             moveCount++;
         }
