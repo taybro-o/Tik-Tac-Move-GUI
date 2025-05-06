@@ -1,5 +1,5 @@
 Game has gameBoard has players.
-board has player and enemy.
+gameBoard has player and enemy.
 player has name, mark, x_cord, y_cord, previous_x_cord, previous_y_cord.
 
 game does showTitle(), playsGame(), exitsGame()
