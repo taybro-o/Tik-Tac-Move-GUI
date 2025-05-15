@@ -2,6 +2,7 @@
 public class Game {
 	//plays game!
 	public static void main(String[] args) {
+		new GameWindow();
 		showTitleScreen(); // DISPLAYS SIMPLE GAME TITLE SCREEN WITH A START GAME BUTTON
 		Board gameBoard = createBoard(); // creates the game board.
 		startGameLoop(gameBoard); // main game loop!
