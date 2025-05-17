@@ -2,8 +2,6 @@
 public class Game {
 	//plays game!
 	public static void main(String[] args) {
-		new GameWindow();
-		new GameWindow(1);
 		showTitleScreen(); // DISPLAYS SIMPLE GAME TITLE SCREEN WITH A START GAME BUTTON
 		Board gameBoard = createBoard(); // creates the game board.
 		startGameLoop(gameBoard); // main game loop!
@@ -17,13 +15,7 @@ public class Game {
 
 	// NEEDS A COMPLETE GUI BASED REWRITE
 	static void showTitleScreen() {
-		System.out.print("  *******************************\n");
-		System.out.print(" *                               *\n");
-	    System.out.print("*    Welcome to Tic-Tac-Move!     *\n");
-	    System.out.print(" *                               *\n");
-	    System.out.print("  *******************************\n");
-
-	    System.out.println();
+		GameWindow MainWindow = new GameWindow();
 	}
 
 	private static Board createBoard() {

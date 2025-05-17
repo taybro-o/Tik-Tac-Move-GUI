@@ -1,17 +1,80 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GameWindow extends JFrame {
 
+    private CardLayout cardLayout = new CardLayout();
+    private JPanel MAIN_PANEL = new JPanel(cardLayout);
+
+    public final String TITLE_SCREEN_CONST = "TITLE";
+    public final String BOARD_SCREEN_CONST = "BOARD";
+    public final String WIN_SCREEN_CONST = "WIN";
+
+    private JPanel TITLE_SCREEN;
+    private JPanel BOARD_SCREEN;
+    private JPanel WIN_SCREEN;
+
     public JButton buttons[] = new JButton[9];
 
-    //creates
+    //creates GameWindow and TITLE_SCREEN
     GameWindow() {
         super("Tik-Tac-Move!");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(500, 500);
-        setLayout(new BorderLayout());
         setResizable(false);
+        setSize(500, 500);
+
+        MAIN_PANEL.setSize(500, 500);
+        MAIN_PANEL.setBackground(new Color(255, 229, 180));
+
+        setContentPane(MAIN_PANEL);
+
+        createTITLE_SCREEN();
+        MAIN_PANEL.add(TITLE_SCREEN, TITLE_SCREEN_CONST);
+        //setContentPane(null);
+
+        createBOARD_SCREEN();
+        MAIN_PANEL.add(BOARD_SCREEN, BOARD_SCREEN_CONST);
+
+        setVisible(true);
+
+    }
+
+    private void createTITLE_SCREEN() {
+        TITLE_SCREEN = new JPanel(null);
+        ImageIcon logoImage = new ImageIcon("newLogo.png");
+
+        JLabel logoLabel = new JLabel(logoImage);
+        logoLabel.setBounds(0, 0, 500, 250);
+
+        TITLE_SCREEN.add(logoLabel);
+
+        JPanel startButtonPanel = new JPanel();
+        startButtonPanel.setSize(500, 500);
+        startButtonPanel.setLayout(new BorderLayout(0, 0));
+        startButtonPanel.setBorder(null);
+
+        JButton startButton = createButton();
+        startButton.setBorder(null);
+        startButton.setText("Start Game!");
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchScreen(BOARD_SCREEN_CONST);
+            }
+        });
+
+        startButtonPanel.setBounds(0, 250, 500, 500);
+        startButtonPanel.setBackground(new Color(255, 229, 180));
+        startButtonPanel.add(startButton, BorderLayout.NORTH);
+
+        TITLE_SCREEN.add(startButtonPanel);
+    }
+
+    private void createBOARD_SCREEN() {
+
+        BOARD_SCREEN = new JPanel(new BorderLayout());
 
         // Top panel holding Panel 1 and Panel 2
         JPanel topPanel = new JPanel(new GridLayout(1, 2));
@@ -39,10 +102,9 @@ public class GameWindow extends JFrame {
         }
 
         // Add panels to frame
-        add(topPanel, BorderLayout.NORTH);
-        add(gridPanel, BorderLayout.CENTER);
+        BOARD_SCREEN.add(topPanel, BorderLayout.NORTH);
+        BOARD_SCREEN.add(gridPanel, BorderLayout.CENTER);
 
-        setVisible(true);
     }
 
     private JButton createButton() {
@@ -66,42 +128,21 @@ public class GameWindow extends JFrame {
         return tempButton;
     }
 
-    //creates titleScreen
-    GameWindow(int i) {
-        super("Tik-Tac-Move!");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(500, 500);
-        setBackground(new Color(255, 229, 180));
+    public void switchScreen(String choice) {
+        switch (choice) {
+            case TITLE_SCREEN_CONST:
+                cardLayout.show(MAIN_PANEL, TITLE_SCREEN_CONST);
+                break;
 
-        setLayout(null);
-        setResizable(false);
+            case BOARD_SCREEN_CONST:
+                cardLayout.show(MAIN_PANEL, BOARD_SCREEN_CONST);
+                break;
 
-        ImageIcon logoImage = new ImageIcon("newLogo.png");
+            //would add case 2 of win screen here
 
-        JLabel logoLabel = new JLabel(logoImage);
-        logoLabel.setBounds(0,0, 500, 250);
-
-        add(logoLabel);
-
-        JPanel startButtonPanel = new JPanel();
-        startButtonPanel.setSize(500, 500);
-        startButtonPanel.setLayout(new BorderLayout(0,0));
-        startButtonPanel.setBorder(null);
-
-        JButton startButton = createButton();
-        startButton.setBorder(null);
-        startButton.setText("Start Game!");
-
-        startButtonPanel.setBounds(0, 250 , 500, 500);
-        startButtonPanel.setBackground(new Color(255, 229, 180));
-        startButtonPanel.add(startButton, BorderLayout.NORTH);
-
-        add(startButtonPanel);
-
-
-        setVisible(true);
-        System.out.println(getWidth() + " " + getHeight());
-
+            default:
+                throw new IllegalStateException("Unexpected value: " + choice);
+        }
     }
 
 
