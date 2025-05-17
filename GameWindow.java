@@ -42,18 +42,17 @@ public class GameWindow extends JFrame {
     }
 
     private void createTITLE_SCREEN() {
-        TITLE_SCREEN = new JPanel(null);
-        ImageIcon logoImage = new ImageIcon("newLogo.png");
+        TITLE_SCREEN = new JPanel(new GridLayout(2, 1));
+        TITLE_SCREEN.setSize(500, 500);
 
-        JLabel logoLabel = new JLabel(logoImage);
-        logoLabel.setBounds(0, 0, 500, 250);
+        JLabel logoLabel = new JLabel(new ImageIcon("newLogo.png"));
+        logoLabel.setSize(500,250);
 
         TITLE_SCREEN.add(logoLabel);
 
         JPanel startButtonPanel = new JPanel();
-        startButtonPanel.setSize(500, 500);
+        startButtonPanel.setSize(500, 250);
         startButtonPanel.setLayout(new BorderLayout(0, 0));
-        startButtonPanel.setBorder(null);
 
         JButton startButton = createButton();
         startButton.setBorder(null);
@@ -65,7 +64,6 @@ public class GameWindow extends JFrame {
             }
         });
 
-        startButtonPanel.setBounds(0, 250, 500, 500);
         startButtonPanel.setBackground(new Color(255, 229, 180));
         startButtonPanel.add(startButton, BorderLayout.NORTH);
 
