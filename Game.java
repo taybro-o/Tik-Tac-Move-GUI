@@ -55,14 +55,8 @@ public class Game {
 
 	// NEEDS A COMPLETE GUI BASED REWRITE
 	static public void displayWinner(Player player) {
-
-		System.out.println();
-		System.out.println( "  *******************************");
-  	 	System.out.println( " *                               *");
-  	    System.out.println( "*  " + player.name +" " + player.mark  + ", has WON the Game!!" + "    *");
-    	System.out.println( " *                               *");
-    	System.out.println(   "  *******************************");
-    	System.out.println();
+		MainWindow.winnerLabel.setText((player.name + " " + player.mark + " has won the game!!").toUpperCase());
+		MainWindow.switchScreen(GameWindow.WIN_SCREEN_CONST);
 	}
 	
 	

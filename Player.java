@@ -33,8 +33,8 @@ public class Player {
         System.out.println();
     }
 
-    // NEEDS A COMPLETE GUI BASED REWRITE
-    //fetches player move. doesn't verify.
+    // NEEDS A COMPLETE GUI BASED REWRITE // done maybe
+    //prompts player to move.
     void promptForMove(int moveCount) {
 
         if (Game.checkGameStatus()) {
@@ -48,13 +48,15 @@ public class Player {
                     Game.MainWindow.p2MessageLabel.setText("Click empty cell to place your mark!");
                 }
             } else { //DIFFERENT GUI CODE WITH FIRST CLICK HIGHLIGHTING PIECE TO MOVE, SECOND CLICK TO GET WHERE TO MOVE THE PIECE
-                System.out.print(name + " " + mark + ", which piece you want to move? (\"ROW COL <<<>>> 1 2\" range 1 to 3 both): ");
-                previous_x_cord = sc.nextInt();
-                previous_y_cord = sc.nextInt();
 
-                System.out.print(name + " " + mark + ", where do you want to move? (\"ROW COL <<<>>> 1 2\" range 1 to 3 both): ");
-                x_cord = sc.nextInt();
-                y_cord = sc.nextInt();
+                if (playerNumber == 1) {
+                    Game.MainWindow.p2MessageLabel.setText("");
+                    Game.MainWindow.p1MessageLabel.setText("Click a piece to move!");
+
+                } else {
+                    Game.MainWindow.p1MessageLabel.setText("");
+                    Game.MainWindow.p2MessageLabel.setText("Click a piece to move!");
+                }
 
             }
         }

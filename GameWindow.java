@@ -14,7 +14,7 @@ public class GameWindow extends JFrame {
     public static final String WIN_SCREEN_CONST = "WIN";
 
     private JPanel TITLE_SCREEN;
-    public JPanel GET_INFO;
+    private JPanel GET_INFO;
     private JPanel BOARD_SCREEN;
     private JPanel WIN_SCREEN;
 
@@ -28,6 +28,9 @@ public class GameWindow extends JFrame {
 
     //From GET_INFO
     JTextField p1Name, p1Mark, p2Name;
+
+    //from WIN_SCREEN
+    JLabel winnerLabel;
 
     //creates GameWindow and TITLE_SCREEN
     GameWindow() {
@@ -52,6 +55,9 @@ public class GameWindow extends JFrame {
 
         createBOARD_SCREEN();
         MAIN_PANEL.add(BOARD_SCREEN, BOARD_SCREEN_CONST);
+
+        createWIN_SCREEN();
+        MAIN_PANEL.add(WIN_SCREEN, WIN_SCREEN_CONST);
 
         setVisible(true);
 
@@ -268,6 +274,31 @@ public class GameWindow extends JFrame {
 
     }
 
+    private void createWIN_SCREEN() {
+        WIN_SCREEN = new JPanel(new GridLayout(2, 1));
+
+        WIN_SCREEN.setSize(500, 500);
+        WIN_SCREEN.setBackground(new Color(255, 229, 180));
+
+        JLabel logoLabel = new JLabel(new ImageIcon("newLogo.png"));
+        logoLabel.setSize(500,250);
+
+        WIN_SCREEN.add(logoLabel);
+
+        JPanel bottomPanel = new JPanel(new BorderLayout(0,0));
+        bottomPanel.setSize(500, 250);
+        bottomPanel.setBackground(new Color(255, 229, 180));
+
+        winnerLabel = new JLabel("player INT, Mark has won the game!!", SwingConstants.CENTER);
+        winnerLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+
+        bottomPanel.add(winnerLabel, BorderLayout.CENTER);
+
+        WIN_SCREEN.add(winnerLabel);
+
+    }
+
+
     private JButton createButton() {
         JButton tempButton = new JButton();
         tempButton.setBackground(new Color(255, 229, 180));
@@ -303,7 +334,9 @@ public class GameWindow extends JFrame {
                 cardLayout.show(MAIN_PANEL, BOARD_SCREEN_CONST);
                 break;
 
-            //would add case of win screen here
+            case WIN_SCREEN_CONST:
+                cardLayout.show(MAIN_PANEL, WIN_SCREEN_CONST);
+                break;
 
             default:
                 throw new IllegalStateException("Unexpected value: " + choice);
