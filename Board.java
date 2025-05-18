@@ -23,24 +23,7 @@ public class Board {
 
     // NEEDS A COMPLETE GUI BASED REWRITE
     void displayBoard() {
-
-        Game.showTitleScreen(); //AFTER GUI REWRITE, THIS WILL BECOME OBSOLETE
-
-        System.out.println("=".repeat(35));
-        System.out.println(p1.name + " " + p1.mark + " ".repeat(5) + p2.name + " " + p2.mark);
-        System.out.println("=".repeat(35));
-
-        System.out.println();
-
-        for (char[] x : board) {
-            System.out.print(" ".repeat(11));
-            for (char y : x) {
-                System.out.print(y);
-                System.out.print(" ".repeat(5));
-            }
-            System.out.println();
-            System.out.println();
-        }
+        Game.MainWindow.switchScreen(GameWindow.BOARD_SCREEN_CONST);
     }
 
     //decides which player turn is it based on moveCount

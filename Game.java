@@ -1,10 +1,12 @@
 
 public class Game {
 	//plays game!
+
+	public static GameWindow MainWindow;
+	public static Board gameBoard;
+
 	public static void main(String[] args) {
 		showTitleScreen(); // DISPLAYS SIMPLE GAME TITLE SCREEN WITH A START GAME BUTTON
-		Board gameBoard = createBoard(); // creates the game board.
-		startGameLoop(gameBoard); // main game loop!
 	}
 
 	static private boolean gameStatus = true; // true means game is on, false means game has ended and a winner decided.
@@ -13,9 +15,9 @@ public class Game {
 		return gameStatus;
 	}
 
-	// NEEDS A COMPLETE GUI BASED REWRITE
+	// NEEDS A COMPLETE GUI BASED REWRITE //Done
 	static void showTitleScreen() {
-		GameWindow MainWindow = new GameWindow();
+		MainWindow = new GameWindow();
 	}
 
 	private static Board createBoard() {
@@ -26,8 +28,9 @@ public class Game {
 		return new Board(player1, player2);
 	}
 
-	private static void startGameLoop(Board gameBoard) {
-		//display empty board once before game starts official and asks player 1 for move
+	public static void startGameLoop() {
+
+		gameBoard = createBoard(); // creates the game board.
 		gameBoard.displayBoard(); //I THINK THIS WILL STAY HERE EVEN AFTER GUI REWORK.
 
 		do {

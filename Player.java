@@ -14,30 +14,23 @@ public class Player {
 	
 	Player(int number) {
 		this.playerNumber = number;
-		this.getDetails(); //GETS PLAYER NAME AND IF NECESSARY, PLAYER MA
+		this.setDetails(); //GETS PLAYER NAME AND IF NECESSARY, PLAYER MARK
 	}
 	
 	Player(int number, char mark) {
 		this.playerNumber = number;
 		this.mark = mark == 'X' ? 'O' : 'X';
-		this.getDetails();
+		this.setDetails();
 	}
 
 	// NEEDS A COMPLETE GUI BASED REWRITE
-	void getDetails() {
-		
-		System.out.print("Enter name for Player " + playerNumber + ": ");
-		name = sc.nextLine();
+	void setDetails() {
+
+
+		name = playerNumber == 1 ? Game.MainWindow.p1Name.getText() : Game.MainWindow.p2Name.getText();
 		
 		if(mark == '\0') {
-			do {
-				System.out.print("Enter mark for Player " + playerNumber + " (X or O): ");
-				mark = sc.next().charAt(0); mark = Character.toUpperCase(mark);
-		
-				if(!(mark == 'X' || mark == 'O')) {
-					System.out.println("Invalid choice, try again."); //create a separate class called messages and replace this with a static method call that actually gives this message to player in GUI.
-				}
-			} while( !(mark == 'X' || mark == 'O') );
+			mark = Game.MainWindow.p1Mark.getText().toUpperCase().charAt(0);
 		}
 		System.out.println();
 	}
