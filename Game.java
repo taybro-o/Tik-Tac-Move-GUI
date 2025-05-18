@@ -34,15 +34,15 @@ public class Game {
 		MainWindow.p1Label.setText(gameBoard.p1.name +" " + gameBoard.p1.mark);
 		MainWindow.p2Label.setText(gameBoard.p2.name +" " + gameBoard.p2.mark);
 
-		gameBoard.displayBoard(); //I THINK THIS WILL STAY HERE EVEN AFTER GUI REWORK.
+		gameBoard.displayBoard();
 
-		do {
-			//plays game logic!
-			if(gameStatus) {
-				gameBoard.playGame();
-			}
-			gameBoard.displayBoard(); //displays current game progress after previous player's move.
-		} while(gameStatus); // Loops the game until winner is found.
+//		do {
+//			//plays game logic!
+//			if(gameStatus) {
+//				gameBoard.playGame();
+//			}
+//			//gameBoard.displayBoard(); //displays current game progress after previous player's move.
+//		} while(gameStatus); // Loops the game until winner is found.
 	}
 
 

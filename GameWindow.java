@@ -209,7 +209,55 @@ public class GameWindow extends JFrame {
         for (int i = 0; i < 9; i++) {
             buttons[i] = createButton();
 
+            int cellNo = i;
+            buttons[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    theResolver(cellNo);
+                }
 
+                void theResolver(int index) {
+                    if(Game.gameBoard.moveCount < 6) {
+                        if(Game.gameBoard.moveCount % 2 == 0) {
+                            setCordforPlayer(Game.gameBoard.p1, cellNo);
+
+                            if(Game.gameBoard.validateMove(Game.gameBoard.p1)){ //RETURNS TRUE ON BAD INPUT
+                                p1MessageLabel.setText("That cell is already Taken!");
+                            } else {
+                                Game.gameBoard.placePiece(Game.gameBoard.p1);
+                                buttons[index].setText(Character.toString(Game.gameBoard.p1.mark));
+                                Game.gameBoard.checkWIN(Game.gameBoard.p1);
+                                Game.gameBoard.updateBoardGUI();
+                            }
+                        } else {
+                            setCordforPlayer(Game.gameBoard.p2, cellNo);
+
+                            if(Game.gameBoard.validateMove(Game.gameBoard.p2)){ //RETURNS TRUE ON BAD INPUT
+                                p2MessageLabel.setText("That cell is already Taken!");
+                            } else {
+                                Game.gameBoard.placePiece(Game.gameBoard.p2);
+                                buttons[index].setText(Character.toString(Game.gameBoard.p2.mark));
+                                Game.gameBoard.checkWIN(Game.gameBoard.p2);
+                                Game.gameBoard.updateBoardGUI();
+                            }
+                        }
+                    }
+                }
+
+                void setCordforPlayer(Player currentPlayer, int index) {
+                    if (index == 0) {currentPlayer.x_cord = 1; currentPlayer.y_cord = 1;}
+                    if (index == 1) {currentPlayer.x_cord = 1; currentPlayer.y_cord = 2;}
+                    if (index == 2) {currentPlayer.x_cord = 1; currentPlayer.y_cord = 3;}
+                    if (index == 3) {currentPlayer.x_cord = 2; currentPlayer.y_cord = 1;}
+                    if (index == 4) {currentPlayer.x_cord = 2; currentPlayer.y_cord = 2;}
+                    if (index == 5) {currentPlayer.x_cord = 2; currentPlayer.y_cord = 3;}
+                    if (index == 6) {currentPlayer.x_cord = 3; currentPlayer.y_cord = 1;}
+                    if (index == 7) {currentPlayer.x_cord = 3; currentPlayer.y_cord = 2;}
+                    if (index == 8) {currentPlayer.x_cord = 3; currentPlayer.y_cord = 3;}
+                }
+
+
+            });
 
             gridPanel.add(buttons[i]);
         }
@@ -233,10 +281,10 @@ public class GameWindow extends JFrame {
 //            tempButton.setOpaque(true);
         //  button.setBackground(new Color(240, 240, 240)); // Light gray
         tempButton.setForeground(Color.BLACK);
-        tempButton.setFont(new Font("Arial", Font.BOLD, 14));
+        //tempButton.setFont(new Font("Arial", Font.BOLD, 14));
         tempButton.setBorder(BorderFactory.createLineBorder(new Color(139, 60, 68), 4));
         tempButton.setPreferredSize(new Dimension(100, 40));
-        tempButton.setFont(new Font("Courier New", Font.BOLD, 20));
+        tempButton.setFont(new Font("Comic Sans MS", Font.BOLD, 26));
 
         return tempButton;
     }
@@ -255,7 +303,7 @@ public class GameWindow extends JFrame {
                 cardLayout.show(MAIN_PANEL, BOARD_SCREEN_CONST);
                 break;
 
-            //would add case 2 of win screen here
+            //would add case of win screen here
 
             default:
                 throw new IllegalStateException("Unexpected value: " + choice);

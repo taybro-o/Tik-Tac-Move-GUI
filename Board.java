@@ -23,11 +23,27 @@ public class Board {
 
     // NEEDS A COMPLETE GUI BASED REWRITE
     void displayBoard() {
+
+        updateBoardGUI();
         Game.MainWindow.switchScreen(GameWindow.BOARD_SCREEN_CONST);
+    }
+
+    public void updateBoardGUI() {
+        if (moveCount < 6) {
+            if (moveCount % 2 == 0) {
+                Game.MainWindow.p2MessageLabel.setText("");
+                Game.MainWindow.p1MessageLabel.setText("Click to place your mark!");
+
+            } else {
+                Game.MainWindow.p1MessageLabel.setText("");
+                Game.MainWindow.p2MessageLabel.setText("Click to place your mark!");
+            }
+        }
     }
 
     //decides which player turn is it based on moveCount
     void playGame() {
+
         // player 1 move
         if (moveCount % 2 == 0) {
             playTurn(p1);
@@ -46,7 +62,7 @@ public class Board {
         //For move input,
         if (Game.checkGameStatus()) { //removing this redundant looking "if" might break the game.
             do {
-                currentPlayer.getMove(moveCount); // gets player move for both game phases.
+                currentPlayer.promptForMove(moveCount); // gets player move for both game phases.
                 needsInput = validateMove(currentPlayer); // validates move and if input is correct sets needsInput = false;
             } while (needsInput); // loops until correct input is given.
         }
