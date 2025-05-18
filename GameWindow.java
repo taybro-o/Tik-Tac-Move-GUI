@@ -20,6 +20,11 @@ public class GameWindow extends JFrame {
 
     // from createBOARD
     public JButton buttons[] = new JButton[9];
+    JPanel nameMarkMessagePanel;
+    JLabel p1Label;
+    JLabel p1MessageLabel;
+    JLabel p2Label;
+    JLabel p2MessageLabel;
 
     //From GET_INFO
     JTextField p1Name, p1Mark, p2Name;
@@ -174,18 +179,26 @@ public class GameWindow extends JFrame {
         BOARD_SCREEN = new JPanel(new BorderLayout());
 
         // Top panel holding p1Label 1 and p2Label
-        JPanel nameMarkPanel = new JPanel(new GridLayout(1, 2));
+        nameMarkMessagePanel = new JPanel(new GridLayout(2, 2));
 
-        JLabel p1Label = new JLabel(Game.gameBoard.p1.name +" " + Game.gameBoard.p1.mark, SwingConstants.CENTER);
+        p1Label = new JLabel("player 1, Mark", SwingConstants.CENTER);
         p1Label.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-        nameMarkPanel.add(p1Label);
+        nameMarkMessagePanel.add(p1Label);
 
-        JLabel p2Label = new JLabel(Game.gameBoard.p2.name +" " + Game.gameBoard.p2.mark, SwingConstants.CENTER);
+        p2Label = new JLabel("player 2, Mark", SwingConstants.CENTER);
         p2Label.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-        nameMarkPanel.add(p2Label);
+        nameMarkMessagePanel.add(p2Label);
 
-        nameMarkPanel.setPreferredSize(new Dimension(500, 50));
-        nameMarkPanel.setBackground(new Color(139, 60, 68));
+        p1MessageLabel = new JLabel("player 1, Mark", SwingConstants.CENTER);
+        p1MessageLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+        nameMarkMessagePanel.add(p1MessageLabel);
+
+        p2MessageLabel = new JLabel("player 2, Mark", SwingConstants.CENTER);
+        p2MessageLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+        nameMarkMessagePanel.add(p2MessageLabel);
+
+        nameMarkMessagePanel.setPreferredSize(new Dimension(500, 50));
+        nameMarkMessagePanel.setBackground(new Color(139, 60, 68));
         // JLabel.setFont(new Font("Courier New", Font.ITALIC, 20));
 
         // Center panel with 3x3 buttons
@@ -202,7 +215,7 @@ public class GameWindow extends JFrame {
         }
 
         // Add panels to frame
-        BOARD_SCREEN.add(nameMarkPanel, BorderLayout.NORTH);
+        BOARD_SCREEN.add(nameMarkMessagePanel, BorderLayout.NORTH);
         BOARD_SCREEN.add(gridPanel, BorderLayout.CENTER);
 
     }
