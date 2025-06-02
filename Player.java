@@ -6,7 +6,7 @@ public class Player {
     int previous_x_cord = 0, previous_y_cord = 0; // for advance movement
     int x_cord = 0, y_cord = 0; // for initial and advance movement
     int penaltyCount = 0;
-    boolean[] cordsSelected = {false, false, false, false}; // 0 = previous piece selected, 1 = next cell selected, 2= -= from previous cords 3 -= from next cell cord
+    boolean[] cordsSelected = {false, false, false, false}; // 0 = previous piece selected, 1 = next cell selected, 2= -= from previous cords done 3 -= from next cell cord done
 
 
     Player(int number) {
@@ -20,7 +20,7 @@ public class Player {
         this.setDetails();
     }
 
-    // NEEDS A COMPLETE GUI BASED REWRITE
+    // NEEDS A COMPLETE GUI BASED REWRITE // Done
     void setDetails() {
         name = playerNumber == 1 ? Game.MainWindow.p1Name.getText() : Game.MainWindow.p2Name.getText();
 
@@ -30,6 +30,7 @@ public class Player {
         System.out.println();
     }
 
+    //sets player coordinate for initial and advance phase game
     void setCord(int index) {
         if (Game.gameBoard.moveCount < 6) {
             if (index == 0) {x_cord = 1; y_cord = 1;}
@@ -70,6 +71,7 @@ public class Player {
         }
     }
 
+    //plays player turn after a cell is clicked
     public void playTurn(int index) {
         setCord(index);
 
@@ -91,7 +93,7 @@ public class Player {
         else {
 
             if(Game.gameBoard.validateMove(this)) { //RETURNS TRUE ON BAD INPUT
-                System.out.println( "From validateMove if : "+ this.playerNumber + "\n" + this.previous_x_cord + " " + this.previous_y_cord + "\n" + this.x_cord + " " + this.y_cord + "\n");
+                Game.gameBoard.updateBoardPanelGUI();
             } else if (cordsSelected[0] && cordsSelected[1]){
                 cordsSelected[0] = false; cordsSelected[1] = false;
                 cordsSelected[2] = false; cordsSelected[3] = false;

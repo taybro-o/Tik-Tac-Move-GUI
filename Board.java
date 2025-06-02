@@ -24,7 +24,7 @@ public class Board {
         this.p2 = p2;
     }
 
-    // NEEDS A COMPLETE GUI BASED REWRITE
+    // NEEDS A COMPLETE GUI BASED REWRITE //DONE
     void displayBoard() {
         updateBoardPanelGUI();
         Game.MainWindow.switchScreen(GameWindow.BOARD_SCREEN_CONST);
@@ -65,21 +65,6 @@ public class Board {
             Game.MainWindow.buttons[i].setText(Character.toString( Game.gameBoard.board[(i/3)][(i%3)] == '.' ? ' ' : Game.gameBoard.board[(i/3)][(i%3)] ));
         }
     }
-//    //decides which player turn is it based on moveCount
-//    void playGame() {
-//
-//        // player 1 move
-//        if (moveCount % 2 == 0) {
-//            playTurn(p1);
-//            checkWIN(p1);// checks for win immediately after playing turn.
-//        } else {
-//            playTurn(p2);
-//            checkWIN(p2);// checks for win immediately after playing turn.
-//
-//        }
-
-//    }
-    //
 
     // Checks bound for initial and advance game.
     //If this returns false = input good! else input is wrong! try again prompt to player.

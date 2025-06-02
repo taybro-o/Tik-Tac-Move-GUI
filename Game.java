@@ -9,9 +9,7 @@ public class Game {
 		showTitleScreen(); // DISPLAYS SIMPLE GAME TITLE SCREEN WITH A START GAME BUTTON
 	}
 
-	static private boolean gameStatus = true; // true means game is on, false means game has ended and a winner decided.
-
-	// NEEDS A COMPLETE GUI BASED REWRITE //Done
+    // NEEDS A COMPLETE GUI BASED REWRITE //Done
 	static void showTitleScreen() {
 		MainWindow = new GameWindow();
 	}
@@ -34,7 +32,7 @@ public class Game {
 
     }
 
-	// NEEDS A COMPLETE GUI BASED REWRITE
+	// NEEDS A COMPLETE GUI BASED REWRITE // DONE
 	static public void displayWinner(Player player) {
 		MainWindow.winnerLabel.setText((player.name + " " + player.mark + " has won the game!!").toUpperCase());
 		MainWindow.switchScreen(GameWindow.WIN_SCREEN_CONST);
