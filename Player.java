@@ -8,7 +8,7 @@ public class Player {
     int previous_x_cord = 0, previous_y_cord = 0; // for advance movement
     int x_cord = 0, y_cord = 0; // for initial and advance movement
     int penaltyCount = 0;
-    boolean previousCordSelected = false;
+    boolean[] cordsSelected = {false, false, false, false}; // 0 = previous piece selected, 1 = next cell selected, 2= -= from previous cords 3 -= from next cell cord
 
 
     Scanner sc = new Scanner(System.in);
@@ -77,7 +77,7 @@ public class Player {
         }
 
         else {
-            if(!previousCordSelected){
+            if(!cordsSelected[0]){
                 if (index == 0) {previous_x_cord = 1; previous_y_cord = 1;}
                 if (index == 1) {previous_x_cord = 1; previous_y_cord = 2;}
                 if (index == 2) {previous_x_cord = 1; previous_y_cord = 3;}
@@ -87,7 +87,8 @@ public class Player {
                 if (index == 6) {previous_x_cord = 3; previous_y_cord = 1;}
                 if (index == 7) {previous_x_cord = 3; previous_y_cord = 2;}
                 if (index == 8) {previous_x_cord = 3; previous_y_cord = 3;}
-            } else {
+                cordsSelected[0] = true;
+            } else if(!cordsSelected[1]){
                     if (index == 0) {x_cord = 1; y_cord = 1;}
                     if (index == 1) {x_cord = 1; y_cord = 2;}
                     if (index == 2) {x_cord = 1; y_cord = 3;}
@@ -97,6 +98,7 @@ public class Player {
                     if (index == 6) {x_cord = 3; y_cord = 1;}
                     if (index == 7) {x_cord = 3; y_cord = 2;}
                     if (index == 8) {x_cord = 3; y_cord = 3;}
+                    cordsSelected[1] = true;
             }
         }
     }
@@ -113,7 +115,7 @@ public class Player {
                 }
             } else {
                 Game.gameBoard.placePiece(this);
-                Game.MainWindow.buttons[index].setText(Character.toString(this.mark));
+                Game.gameBoard.updateBoardButtonGUI();
                 Game.gameBoard.checkWIN(this);
                 Game.gameBoard.updateBoardPanelGUI();
             }
@@ -121,6 +123,16 @@ public class Player {
 
         else {
 
+            if(Game.gameBoard.validateMove(this)) { //RETURNS TRUE ON BAD INPUT
+                System.out.println( "From validateMove if : "+ this.playerNumber + "\n" + this.previous_x_cord + " " + this.previous_y_cord + "\n" + this.x_cord + " " + this.y_cord + "\n");
+            } else if (cordsSelected[0] && cordsSelected[1]){
+                cordsSelected[0] = false; cordsSelected[1] = false;
+                cordsSelected[2] = false; cordsSelected[3] = false;
+                Game.gameBoard.placePiece(this);
+                Game.gameBoard.updateBoardButtonGUI();
+                Game.gameBoard.checkWIN(this);
+                Game.gameBoard.updateBoardPanelGUI();
+            }
         }
 
     }

@@ -37,9 +37,31 @@ public class Board {
                 Game.MainWindow.p1MessageLabel.setText("");
                 Game.MainWindow.p2MessageLabel.setText("Click to place your mark!");
             }
+        } else {
+            if (moveCount % 2 == 0) {
+                if (Game.gameBoard.p1.cordsSelected[0]) {
+                    Game.MainWindow.p1MessageLabel.setText("Click empty place to place your piece!");
+                } else {
+                    Game.MainWindow.p2MessageLabel.setText("");
+                    Game.MainWindow.p1MessageLabel.setText("Click your piece to move!!");
+                }
+
+            } else {
+                if (Game.gameBoard.p2.cordsSelected[0]) {
+                    Game.MainWindow.p2MessageLabel.setText("Click empty place to place your piece!");
+                } else {
+                    Game.MainWindow.p1MessageLabel.setText("");
+                    Game.MainWindow.p2MessageLabel.setText("Click your piece to move!!");
+                }
+            }
         }
     }
 
+    public void updateBoardButtonGUI() {
+        for (int i = 0; i < 9; i++) {
+            Game.MainWindow.buttons[i].setText(Character.toString( Game.gameBoard.board[(i/3)][(i%3)] == '.' ? ' ' : Game.gameBoard.board[(i/3)][(i%3)] ));
+        }
+    }
 //    //decides which player turn is it based on moveCount
 //    void playGame() {
 //
@@ -52,36 +74,44 @@ public class Board {
 //            checkWIN(p2);// checks for win immediately after playing turn.
 //
 //        }
+
 //    }
-
     //
-    private void playTurn(Player currentPlayer) {
 
-    }
     // Checks bound for initial and advance game.
     //If this returns false = input good! else input is wrong! try again prompt to player.
-    //after 2 bad inputs skip turn as penalty.
 
+    //after 2 bad inputs skip turn as penalty.
     // NEEDS A COMPLETE GUI BASED REWRITE
+
     boolean validateMove(Player player) {
 
-        //adjust input for array bounds, all 4 of them.
-        player.x_cord -= 1;
-        player.y_cord -= 1;
-        player.previous_x_cord -= 1;
-        player.previous_y_cord -= 1;
+
 
         //Initial game.
         if (moveCount < 6) {
+            player.x_cord -= 1;
+            player.y_cord -= 1;
             //to enable skipping, add this line below with '.' condition  (board[player.x_cord][player.y_cord] == player.mark ||
             if ((player.x_cord >= 0 && player.x_cord <= 2) && (player.y_cord >= 0 && player.y_cord <= 2) && (board[player.x_cord][player.y_cord] == '.')) {
                 return false;
             } else {
                 return true;
             }
-        }
+        } else {
 
-        else {
+            if (!player.cordsSelected[2]) {
+                player.previous_x_cord -= 1;
+                player.previous_y_cord -= 1;
+                player.cordsSelected[2] = true;
+            } else if (!player.cordsSelected[3]) {
+                player.x_cord -= 1;
+                player.y_cord -= 1;
+                player.cordsSelected[3] = true;
+            }
+
+
+
             if (((player.x_cord >= 0 && player.x_cord <= 2) && (player.y_cord >= 0 && player.y_cord <= 2) && (board[player.x_cord][player.y_cord] == '.'))
                     &&
                     ((player.previous_x_cord >= 0 && player.previous_x_cord <= 2) && (player.previous_y_cord >= 0 && player.previous_y_cord <= 2) && (board[player.previous_x_cord][player.previous_y_cord] == player.mark))) {
@@ -91,7 +121,6 @@ public class Board {
             }
         }
     }
-
     //AFTER GUI IMPLEMENTATION WE WOULD ONLY HAVE TO MATCH THE GUI COMPONENTS REPRESENTING CELLS WITH THE ARRAY'S ROW AND COLUMN
     //PROBABLY JUST MAKE A METHOD THAT DOES THAT WITH IFS AND CALL IT WHERE IT CURRENTLY PLACES PIECE.
     //BY GUI COMPONENTS I MEAN: TOP_LEFT = [0][0] TOP_MIDDLE = [0][1] TOP_RIGHT = [0][2] AND SO ON...
@@ -105,6 +134,8 @@ public class Board {
         //advance game
         else {
             int temp_x_cord = player.previous_x_cord - player.x_cord, temp_y_cord = player.previous_y_cord - player.y_cord;
+
+            System.out.println( "From validateMove if : "+ player.playerNumber + "\n" + player.previous_x_cord + " " + player.previous_y_cord + "\n" + player.x_cord + " " + player.y_cord + "\n");
 
             boolean conditionsMet = false; //flag for twiceTurn, if none of the valid move executes it remains false and penalty is incremented (in player piece).
 
@@ -209,10 +240,10 @@ public class Board {
             moveCount++; //normal moveCount++
         }
     }
-
     //after player plays their move, prompt user to accept or decline twiceTurn, if yes +1 moveCount to skip the enemy's turn.
     // and reset twice turn regardless of accept or decline as players can't stack these to break game.
     //NEEDS A COMPLETE GUI BASED REWRITE
+
     private void handleTwiceTurn(Player player) {
         if (twiceTurn) {
             displayBoard();
@@ -226,10 +257,10 @@ public class Board {
             twiceTurn = false;
         }
     }
-
     //show in GUI you got +1 penalty, totaling 2 allows enemy to skip your turn, and after it resets to 0.
     //gives penalty on illegal (if the above move conditions aren't executed.) moves , totaling to gives enemy twiceTurn.
     //NEEDS A COMPLETE GUI BASED REWRITE
+
     private void handlePenalty(Player player, boolean conditionsMet) {
         if (conditionsMet == false) {
             player.penaltyCount += 1;
@@ -243,8 +274,8 @@ public class Board {
             }
         }
     }
-
     //REMAINS SAME AFTER GUI REWORK.PROBABLY...
+
     void checkWIN(Player player) {
         for (int i = 0; i < SIZE; i++) {
             // check for row win
@@ -267,6 +298,5 @@ public class Board {
         }
 
     }
-
 
 }
