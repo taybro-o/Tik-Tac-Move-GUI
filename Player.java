@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Player {
 
     String name;
@@ -10,8 +8,6 @@ public class Player {
     int penaltyCount = 0;
     boolean[] cordsSelected = {false, false, false, false}; // 0 = previous piece selected, 1 = next cell selected, 2= -= from previous cords 3 -= from next cell cord
 
-
-    Scanner sc = new Scanner(System.in);
 
     Player(int number) {
         this.playerNumber = number;
@@ -32,35 +28,6 @@ public class Player {
             mark = Game.MainWindow.p1Mark.getText().toUpperCase().charAt(0);
         }
         System.out.println();
-    }
-
-    // NEEDS A COMPLETE GUI BASED REWRITE // done maybe
-    //prompts player to move.
-    void promptForMove(int moveCount) {
-
-        if (Game.checkGameStatus()) {
-            if (moveCount < 6) { //DIFFERENT GUI CODE FOR DIRECT CLICK TO PLACE PIECE
-                if (playerNumber == 1) {
-                    Game.MainWindow.p2MessageLabel.setText("");
-                    Game.MainWindow.p1MessageLabel.setText("Click empty cell to place your mark!");
-
-                } else {
-                    Game.MainWindow.p1MessageLabel.setText("");
-                    Game.MainWindow.p2MessageLabel.setText("Click empty cell to place your mark!");
-                }
-            } else { //DIFFERENT GUI CODE WITH FIRST CLICK HIGHLIGHTING PIECE TO MOVE, SECOND CLICK TO GET WHERE TO MOVE THE PIECE
-
-                if (playerNumber == 1) {
-                    Game.MainWindow.p2MessageLabel.setText("");
-                    Game.MainWindow.p1MessageLabel.setText("Click a piece to move!");
-
-                } else {
-                    Game.MainWindow.p1MessageLabel.setText("");
-                    Game.MainWindow.p2MessageLabel.setText("Click a piece to move!");
-                }
-
-            }
-        }
     }
 
     void setCord(int index) {

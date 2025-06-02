@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 public class GameWindow extends JFrame {
 
-    private CardLayout cardLayout = new CardLayout();
-    private JPanel MAIN_PANEL = new JPanel(cardLayout);
+    private final CardLayout cardLayout = new CardLayout();
+    private final JPanel MAIN_PANEL = new JPanel(cardLayout);
 
     public static final String TITLE_SCREEN_CONST = "TITLE";
     public static final String GET_INFO_CONST = "GET-INFO";
@@ -19,7 +19,7 @@ public class GameWindow extends JFrame {
     private JPanel WIN_SCREEN;
 
     // from createBOARD
-    public JButton buttons[] = new JButton[9];
+    public JButton[] buttons = new JButton[9];
     JPanel nameMarkMessagePanel;
     JLabel p1Label;
     JLabel p1MessageLabel;
@@ -279,13 +279,9 @@ public class GameWindow extends JFrame {
         tempButton.setBackground(new Color(255, 229, 180));
         //            button.setBackground(Color.MAGENTA);       // Background color
         tempButton.setForeground(Color.BLACK);      // Text color
-//            button.setOpaque(true);                 // Needed on some systems
-//            tempButton.setBorderPainted(true);         // Optional: cleaner look
         tempButton.setFocusPainted(true);
         tempButton.setBorderPainted(true);
         tempButton.setContentAreaFilled(true);
-//            tempButton.setOpaque(true);
-        //  button.setBackground(new Color(240, 240, 240)); // Light gray
         tempButton.setForeground(Color.BLACK);
         //tempButton.setFont(new Font("Arial", Font.BOLD, 14));
         tempButton.setBorder(BorderFactory.createLineBorder(new Color(160, 82, 45), 4));

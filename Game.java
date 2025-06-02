@@ -11,10 +11,6 @@ public class Game {
 
 	static private boolean gameStatus = true; // true means game is on, false means game has ended and a winner decided.
 
-	static public boolean checkGameStatus() {
-		return gameStatus;
-	}
-
 	// NEEDS A COMPLETE GUI BASED REWRITE //Done
 	static void showTitleScreen() {
 		MainWindow = new GameWindow();
@@ -36,22 +32,7 @@ public class Game {
 
 		gameBoard.displayBoard();
 
-//		do {
-//			//plays game logic!
-//			if(gameStatus) {
-//				gameBoard.playGame();
-//			}
-//			//gameBoard.displayBoard(); //displays current game progress after previous player's move.
-//		} while(gameStatus); // Loops the game until winner is found.
-	}
-
-
-	static public void exitGame(boolean on_off, Player player) {
-		if(!on_off) {
-			gameStatus = false; //Kills the game.
-			displayWinner(player);//displays winner
-		}
-	}
+    }
 
 	// NEEDS A COMPLETE GUI BASED REWRITE
 	static public void displayWinner(Player player) {

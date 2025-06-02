@@ -1,15 +1,18 @@
-import java.lang.Math;
+import javax.swing.*;
+
 
 public class Board {
 
     int moveCount = 0; //even value means p1 turn, odd value means p2 turn.
     final int SIZE = 3;
-    char board[][] = {
+
+    char[][] board = {
 
             {'.', '.', '.'}, //'.' represents an empty space
             {'.', '.', '.'},
             {'.', '.', '.'}
     };
+
 
     Player p1, p2;
     boolean twiceTurn = false; //flag for a game rule. when active:
@@ -86,18 +89,12 @@ public class Board {
 
     boolean validateMove(Player player) {
 
-
-
         //Initial game.
         if (moveCount < 6) {
             player.x_cord -= 1;
             player.y_cord -= 1;
             //to enable skipping, add this line below with '.' condition  (board[player.x_cord][player.y_cord] == player.mark ||
-            if ((player.x_cord >= 0 && player.x_cord <= 2) && (player.y_cord >= 0 && player.y_cord <= 2) && (board[player.x_cord][player.y_cord] == '.')) {
-                return false;
-            } else {
-                return true;
-            }
+            return (player.x_cord < 0 || player.x_cord > 2) || (player.y_cord < 0 || player.y_cord > 2) || (board[player.x_cord][player.y_cord] != '.');
         } else {
 
             if (!player.cordsSelected[2]) {
@@ -111,14 +108,9 @@ public class Board {
             }
 
 
-
-            if (((player.x_cord >= 0 && player.x_cord <= 2) && (player.y_cord >= 0 && player.y_cord <= 2) && (board[player.x_cord][player.y_cord] == '.'))
-                    &&
-                    ((player.previous_x_cord >= 0 && player.previous_x_cord <= 2) && (player.previous_y_cord >= 0 && player.previous_y_cord <= 2) && (board[player.previous_x_cord][player.previous_y_cord] == player.mark))) {
-                return false;
-            } else {
-                return true;
-            }
+            return ((player.x_cord < 0 || player.x_cord > 2) || (player.y_cord < 0 || player.y_cord > 2) || (board[player.x_cord][player.y_cord] != '.'))
+                    ||
+                    ((player.previous_x_cord < 0 || player.previous_x_cord > 2) || (player.previous_y_cord < 0 || player.previous_y_cord > 2) || (board[player.previous_x_cord][player.previous_y_cord] != player.mark));
         }
     }
     //AFTER GUI IMPLEMENTATION WE WOULD ONLY HAVE TO MATCH THE GUI COMPONENTS REPRESENTING CELLS WITH THE ARRAY'S ROW AND COLUMN
@@ -127,9 +119,9 @@ public class Board {
     void placePiece(Player player) {
 
         //initial game
+        //normal moveCount++
         if (moveCount < 6) {
             board[player.x_cord][player.y_cord] = player.mark;
-            moveCount++;
         }
         //advance game
         else {
@@ -231,28 +223,32 @@ public class Board {
             //after player plays their move, prompt user to accept or decline twiceTurn, if yes +1 moveCount to skip the enemy's turn.
             // and reset twice turn regardless of accept or decline as players can't stack these to break game.
             //NEEDS A COMPLETE GUI BASED REWRITE
-            handleTwiceTurn(player);
+            handleTwiceTurn();
 
             //gives penalty on illegal (if the above move conditions aren't executed.) moves , totaling to gives enemy twiceTurn.
             //NEEDS A COMPLETE GUI BASED REWRITE
             handlePenalty(player, conditionsMet);
 
-            moveCount++; //normal moveCount++
         }
+        moveCount++;
     }
     //after player plays their move, prompt user to accept or decline twiceTurn, if yes +1 moveCount to skip the enemy's turn.
     // and reset twice turn regardless of accept or decline as players can't stack these to break game.
     //NEEDS A COMPLETE GUI BASED REWRITE
 
-    private void handleTwiceTurn(Player player) {
+    private void handleTwiceTurn() {
         if (twiceTurn) {
             displayBoard();
-            System.out.print("Twice turn available, accept twice turn? (Y/N) : ");
-            char choice = player.sc.next().charAt(0);
-            if (choice == 'Y' || choice == 'y') {
+            int result = JOptionPane.showConfirmDialog(
+                    null,
+                    "Do you want to accept twice turn?",
+                    "Twice Turn",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (result == JOptionPane.YES_OPTION) {
                 moveCount++;
-            } else {
-                System.out.print("you chose to skip twice turn.");
             }
             twiceTurn = false;
         }
@@ -262,14 +258,15 @@ public class Board {
     //NEEDS A COMPLETE GUI BASED REWRITE
 
     private void handlePenalty(Player player, boolean conditionsMet) {
-        if (conditionsMet == false) {
+        if (!conditionsMet) {
             player.penaltyCount += 1;
-            System.out.println("You have played an illegal move, so +1 penalty, totaling 2 gives your opponent choice to skip your turn! [current penalty count: " + player.penaltyCount + "]\n");
+            JOptionPane.showMessageDialog(null,
+                    player.name+ " " + player.mark + ", You have played an illegal move, so +1 penalty, totaling 2 gives your opponent choice to skip your turn! [current penalty count: " + player.penaltyCount + "]\n");
 
             //show in GUI penalty has been hit and enemy has been given his turn twice.
             if (player.penaltyCount % 2 == 0) {
                 twiceTurn = true;
-                System.out.println("penalty has been hit! your opponent will have a choice to skip your next turn!");
+                JOptionPane.showMessageDialog(null,player.name+ " " + player.mark + ", Penalty has been hit! Your opponent will have a choice to skip your next turn!");
                 player.penaltyCount = 0;
             }
         }
@@ -280,21 +277,21 @@ public class Board {
         for (int i = 0; i < SIZE; i++) {
             // check for row win
             if ((board[i][0] == player.mark) && (board[i][1] == player.mark) && (board[i][2] == player.mark)) {
-                Game.exitGame(false, player); //ask the game to exit as the winner has been decided!
+                Game.displayWinner(player); //ask the game to exit as the winner has been decided!
             }
             // check for column win
             if ((board[0][i] == player.mark) && (board[1][i] == player.mark) && (board[2][i] == player.mark)) {
-                Game.exitGame(false, player); //ask the game to exit as the winner has been decided!
+                Game.displayWinner(player); //ask the game to exit as the winner has been decided!
             }
         }
 
         //check diagonal win 1
         if ((board[0][0] == player.mark) && (board[1][1] == player.mark) && (board[2][2] == player.mark)) {
-            Game.exitGame(false, player); //ask the game to exit as the winner has been decided!
+            Game.displayWinner(player); //ask the game to exit as the winner has been decided!
         }
         //check for diagonal win 2
         if ((board[0][2] == player.mark) && (board[1][1] == player.mark) && (board[2][0] == player.mark)) {
-            Game.exitGame(false, player); //ask the game to exit as the winner has been decided!
+            Game.displayWinner(player); //ask the game to exit as the winner has been decided!
         }
 
     }
