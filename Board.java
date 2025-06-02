@@ -23,12 +23,11 @@ public class Board {
 
     // NEEDS A COMPLETE GUI BASED REWRITE
     void displayBoard() {
-
-        updateBoardGUI();
+        updateBoardPanelGUI();
         Game.MainWindow.switchScreen(GameWindow.BOARD_SCREEN_CONST);
     }
 
-    public void updateBoardGUI() {
+    public void updateBoardPanelGUI() {
         if (moveCount < 6) {
             if (moveCount % 2 == 0) {
                 Game.MainWindow.p2MessageLabel.setText("");
@@ -41,32 +40,22 @@ public class Board {
         }
     }
 
-    //decides which player turn is it based on moveCount
-    void playGame() {
-
-        // player 1 move
-        if (moveCount % 2 == 0) {
-            playTurn(p1);
-            checkWIN(p1);// checks for win immediately after playing turn.
-        } else {
-            playTurn(p2);
-            checkWIN(p2);// checks for win immediately after playing turn.
-
-        }
-    }
+//    //decides which player turn is it based on moveCount
+//    void playGame() {
+//
+//        // player 1 move
+//        if (moveCount % 2 == 0) {
+//            playTurn(p1);
+//            checkWIN(p1);// checks for win immediately after playing turn.
+//        } else {
+//            playTurn(p2);
+//            checkWIN(p2);// checks for win immediately after playing turn.
+//
+//        }
+//    }
 
     //
     private void playTurn(Player currentPlayer) {
-        boolean needsInput = true; //flag to determine if the input is correct
-
-        //For move input,
-        if (Game.checkGameStatus()) { //removing this redundant looking "if" might break the game.
-            do {
-                currentPlayer.promptForMove(moveCount); // gets player move for both game phases.
-                needsInput = validateMove(currentPlayer); // validates move and if input is correct sets needsInput = false;
-            } while (needsInput); // loops until correct input is given.
-        }
-        placePiece(currentPlayer); //placing piece on the board
 
     }
     // Checks bound for initial and advance game.
@@ -88,7 +77,6 @@ public class Board {
             if ((player.x_cord >= 0 && player.x_cord <= 2) && (player.y_cord >= 0 && player.y_cord <= 2) && (board[player.x_cord][player.y_cord] == '.')) {
                 return false;
             } else {
-                System.out.println("Invalid input, try again.\n");
                 return true;
             }
         }
@@ -99,7 +87,6 @@ public class Board {
                     ((player.previous_x_cord >= 0 && player.previous_x_cord <= 2) && (player.previous_y_cord >= 0 && player.previous_y_cord <= 2) && (board[player.previous_x_cord][player.previous_y_cord] == player.mark))) {
                 return false;
             } else {
-                System.out.println("Invalid input, try again.\n");
                 return true;
             }
         }

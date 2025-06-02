@@ -51,7 +51,7 @@ public class GameWindow extends JFrame {
         MAIN_PANEL.add(TITLE_SCREEN, TITLE_SCREEN_CONST);
 
         createGET_INFO();
-        MAIN_PANEL.add(GET_INFO,GET_INFO_CONST);
+        MAIN_PANEL.add(GET_INFO, GET_INFO_CONST);
 
         createBOARD_SCREEN();
         MAIN_PANEL.add(BOARD_SCREEN, BOARD_SCREEN_CONST);
@@ -68,7 +68,7 @@ public class GameWindow extends JFrame {
         TITLE_SCREEN.setSize(500, 500);
 
         JLabel logoLabel = new JLabel(new ImageIcon("newLogo.png"));
-        logoLabel.setSize(500,250);
+        logoLabel.setSize(500, 250);
 
         TITLE_SCREEN.add(logoLabel);
 
@@ -99,7 +99,7 @@ public class GameWindow extends JFrame {
         GET_INFO.setBackground(new Color(255, 229, 180));
 
         JLabel logoLabel = new JLabel(new ImageIcon("newLogo.png"));
-        logoLabel.setSize(500,250);
+        logoLabel.setSize(500, 250);
 
         GET_INFO.add(logoLabel);
 
@@ -115,26 +115,31 @@ public class GameWindow extends JFrame {
         p1MarkLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         p2NameLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
-         p1Name = new JTextField(); p1Mark = new JTextField(); p2Name = new JTextField();
+        p1Name = new JTextField();
+        p1Mark = new JTextField();
+        p2Name = new JTextField();
         //Made 4x4 grid, what we need is the 2 and 3 row. 1 and 4 row can remain empty.
 
         //first row empty
         for (int i = 0; i < 3; i++) {
-            JPanel tempPanel = new JPanel(); tempPanel.setBackground(new Color(255, 229, 180));
+            JPanel tempPanel = new JPanel();
+            tempPanel.setBackground(new Color(255, 229, 180));
             componentPanel.add(tempPanel);
         }
 
         //Added labels for TextFields
-        componentPanel.add(p1NameLabel); componentPanel.add(p1MarkLabel);
+        componentPanel.add(p1NameLabel);
+        componentPanel.add(p1MarkLabel);
         componentPanel.add(p2NameLabel);
 
-        componentPanel.add(p1Name); componentPanel.add(p1Mark);
+        componentPanel.add(p1Name);
+        componentPanel.add(p1Mark);
         componentPanel.add(p2Name);
 
         //last row empty
         for (int i = 0; i < 3; i++) {
 
-            if(i ==1) {
+            if (i == 1) {
                 JButton submitButton = createButton();
                 submitButton.setText("Submit!");
 
@@ -144,24 +149,24 @@ public class GameWindow extends JFrame {
 
                         boolean[] detailsFlag = {false, false, false};
 
-                        if(p1Name.getText().isEmpty()) {
+                        if (p1Name.getText().isEmpty()) {
                             JOptionPane.showMessageDialog(null, "Player 1 Name Field Can't Be Empty!");
                         } else {
                             detailsFlag[0] = true;
                         }
 
-                        if(p2Name.getText().isEmpty()) {
+                        if (p2Name.getText().isEmpty()) {
                             JOptionPane.showMessageDialog(null, "Player 2 Name Field Can't Be Empty!");
                         } else {
                             detailsFlag[1] = true;
                         }
-                        if(!(p1Mark.getText().equalsIgnoreCase("X") || p1Mark.getText().equalsIgnoreCase("O")) ) {
+                        if (!(p1Mark.getText().equalsIgnoreCase("X") || p1Mark.getText().equalsIgnoreCase("O"))) {
                             JOptionPane.showMessageDialog(null, "Player 1 Mark Is Not Valid! (X or O)");
                         } else {
                             detailsFlag[2] = true;
                         }
 
-                        if(detailsFlag[0] && detailsFlag[1] && detailsFlag[2]) {
+                        if (detailsFlag[0] && detailsFlag[1] && detailsFlag[2]) {
                             Game.startGameLoop();
                         }
 
@@ -173,7 +178,8 @@ public class GameWindow extends JFrame {
                 continue;
             }
 
-            JPanel tempPanel = new JPanel(); tempPanel.setBackground(new Color(255, 229, 180));
+            JPanel tempPanel = new JPanel();
+            tempPanel.setBackground(new Color(255, 229, 180));
             componentPanel.add(tempPanel);
         }
 
@@ -223,43 +229,12 @@ public class GameWindow extends JFrame {
                 }
 
                 void theResolver(int index) {
-                    if(Game.gameBoard.moveCount < 6) {
-                        if(Game.gameBoard.moveCount % 2 == 0) {
-                            setCordforPlayer(Game.gameBoard.p1, cellNo);
 
-                            if(Game.gameBoard.validateMove(Game.gameBoard.p1)){ //RETURNS TRUE ON BAD INPUT
-                                p1MessageLabel.setText("That cell is already Taken!");
-                            } else {
-                                Game.gameBoard.placePiece(Game.gameBoard.p1);
-                                buttons[index].setText(Character.toString(Game.gameBoard.p1.mark));
-                                Game.gameBoard.checkWIN(Game.gameBoard.p1);
-                                Game.gameBoard.updateBoardGUI();
-                            }
-                        } else {
-                            setCordforPlayer(Game.gameBoard.p2, cellNo);
-
-                            if(Game.gameBoard.validateMove(Game.gameBoard.p2)){ //RETURNS TRUE ON BAD INPUT
-                                p2MessageLabel.setText("That cell is already Taken!");
-                            } else {
-                                Game.gameBoard.placePiece(Game.gameBoard.p2);
-                                buttons[index].setText(Character.toString(Game.gameBoard.p2.mark));
-                                Game.gameBoard.checkWIN(Game.gameBoard.p2);
-                                Game.gameBoard.updateBoardGUI();
-                            }
-                        }
+                    if (Game.gameBoard.moveCount % 2 == 0) {
+                        Game.gameBoard.p1.playTurn(index);
+                    } else {
+                        Game.gameBoard.p2.playTurn(index);
                     }
-                }
-
-                void setCordforPlayer(Player currentPlayer, int index) {
-                    if (index == 0) {currentPlayer.x_cord = 1; currentPlayer.y_cord = 1;}
-                    if (index == 1) {currentPlayer.x_cord = 1; currentPlayer.y_cord = 2;}
-                    if (index == 2) {currentPlayer.x_cord = 1; currentPlayer.y_cord = 3;}
-                    if (index == 3) {currentPlayer.x_cord = 2; currentPlayer.y_cord = 1;}
-                    if (index == 4) {currentPlayer.x_cord = 2; currentPlayer.y_cord = 2;}
-                    if (index == 5) {currentPlayer.x_cord = 2; currentPlayer.y_cord = 3;}
-                    if (index == 6) {currentPlayer.x_cord = 3; currentPlayer.y_cord = 1;}
-                    if (index == 7) {currentPlayer.x_cord = 3; currentPlayer.y_cord = 2;}
-                    if (index == 8) {currentPlayer.x_cord = 3; currentPlayer.y_cord = 3;}
                 }
 
 
@@ -281,11 +256,11 @@ public class GameWindow extends JFrame {
         WIN_SCREEN.setBackground(new Color(255, 229, 180));
 
         JLabel logoLabel = new JLabel(new ImageIcon("newLogo.png"));
-        logoLabel.setSize(500,250);
+        logoLabel.setSize(500, 250);
 
         WIN_SCREEN.add(logoLabel);
 
-        JPanel bottomPanel = new JPanel(new BorderLayout(0,0));
+        JPanel bottomPanel = new JPanel(new BorderLayout(0, 0));
         bottomPanel.setSize(500, 250);
         bottomPanel.setBackground(new Color(255, 229, 180));
 
