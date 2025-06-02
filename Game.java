@@ -1,27 +1,17 @@
 
 public class Game {
 	//plays game!
+
+	public static GameWindow MainWindow;
+	public static Board gameBoard;
+
 	public static void main(String[] args) {
 		showTitleScreen(); // DISPLAYS SIMPLE GAME TITLE SCREEN WITH A START GAME BUTTON
-		Board gameBoard = createBoard(); // creates the game board.
-		startGameLoop(gameBoard); // main game loop!
 	}
 
-	static private boolean gameStatus = true; // true means game is on, false means game has ended and a winner decided.
-
-	static public boolean checkGameStatus() {
-		return gameStatus;
-	}
-
-	// NEEDS A COMPLETE GUI BASED REWRITE
+    // NEEDS A COMPLETE GUI BASED REWRITE //Done
 	static void showTitleScreen() {
-		System.out.print("  *******************************\n");
-		System.out.print(" *                               *\n");
-	    System.out.print("*    Welcome to Tic-Tac-Move!     *\n");
-	    System.out.print(" *                               *\n");
-	    System.out.print("  *******************************\n");
-
-	    System.out.println();
+		MainWindow = new GameWindow();
 	}
 
 	private static Board createBoard() {
@@ -32,37 +22,20 @@ public class Game {
 		return new Board(player1, player2);
 	}
 
-	private static void startGameLoop(Board gameBoard) {
-		//display empty board once before game starts official and asks player 1 for move
-		gameBoard.displayBoard(); //I THINK THIS WILL STAY HERE EVEN AFTER GUI REWORK.
+	public static void startGameLoop() {
 
-		do {
-			//plays game logic!
-			if(gameStatus) {
-				gameBoard.playGame();
-			}
-			gameBoard.displayBoard(); //displays current game progress after previous player's move.
-		} while(gameStatus); // Loops the game until winner is found.
-	}
+		gameBoard = createBoard(); // creates the game board.
+		MainWindow.p1Label.setText(gameBoard.p1.name +" " + gameBoard.p1.mark);
+		MainWindow.p2Label.setText(gameBoard.p2.name +" " + gameBoard.p2.mark);
 
+		gameBoard.displayBoard();
 
-	static public void exitGame(boolean on_off, Player player) {
-		if(!on_off) {
-			gameStatus = false; //Kills the game.
-			displayWinner(player);//displays winner
-		}
-	}
+    }
 
-	// NEEDS A COMPLETE GUI BASED REWRITE
+	// NEEDS A COMPLETE GUI BASED REWRITE // DONE
 	static public void displayWinner(Player player) {
-
-		System.out.println();
-		System.out.println( "  *******************************");
-  	 	System.out.println( " *                               *");
-  	    System.out.println( "*  " + player.name +" " + player.mark  + ", has WON the Game!!" + "    *");
-    	System.out.println( " *                               *");
-    	System.out.println(   "  *******************************");
-    	System.out.println();
+		MainWindow.winnerLabel.setText((player.name + " " + player.mark + " has won the game!!").toUpperCase());
+		MainWindow.switchScreen(GameWindow.WIN_SCREEN_CONST);
 	}
 	
 	
