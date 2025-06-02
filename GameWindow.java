@@ -210,7 +210,7 @@ public class GameWindow extends JFrame {
         nameMarkMessagePanel.add(p2MessageLabel);
 
         nameMarkMessagePanel.setPreferredSize(new Dimension(500, 50));
-        nameMarkMessagePanel.setBackground(new Color(139, 60, 68));
+        nameMarkMessagePanel.setBackground(new Color(160, 82, 45));
         // JLabel.setFont(new Font("Courier New", Font.ITALIC, 20));
 
         // Center panel with 3x3 buttons
@@ -288,7 +288,7 @@ public class GameWindow extends JFrame {
         //  button.setBackground(new Color(240, 240, 240)); // Light gray
         tempButton.setForeground(Color.BLACK);
         //tempButton.setFont(new Font("Arial", Font.BOLD, 14));
-        tempButton.setBorder(BorderFactory.createLineBorder(new Color(139, 60, 68), 4));
+        tempButton.setBorder(BorderFactory.createLineBorder(new Color(160, 82, 45), 4));
         tempButton.setPreferredSize(new Dimension(100, 40));
         tempButton.setFont(new Font("Comic Sans MS", Font.BOLD, 26));
 
