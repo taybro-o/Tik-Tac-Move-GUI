@@ -27,6 +27,7 @@ public class Board {
     // NEEDS A COMPLETE GUI BASED REWRITE //DONE
     void displayBoard() {
         updateBoardPanelGUI();
+        updateBoardButtonGUI();
         Game.MainWindow.switchScreen(GameWindow.BOARD_SCREEN_CONST);
     }
 
@@ -34,16 +35,16 @@ public class Board {
         if (moveCount < 6) {
             if (moveCount % 2 == 0) {
                 Game.MainWindow.p2MessageLabel.setText("");
-                Game.MainWindow.p1MessageLabel.setText("Click to place your mark!");
+                Game.MainWindow.p1MessageLabel.setText("Click to place your mark!!");
 
             } else {
                 Game.MainWindow.p1MessageLabel.setText("");
-                Game.MainWindow.p2MessageLabel.setText("Click to place your mark!");
+                Game.MainWindow.p2MessageLabel.setText("Click to place your mark!!");
             }
         } else {
             if (moveCount % 2 == 0) {
                 if (Game.gameBoard.p1.cordsSelected[0]) {
-                    Game.MainWindow.p1MessageLabel.setText("Click empty place to place your piece!");
+                    Game.MainWindow.p1MessageLabel.setText("Click to place your mark!!");
                 } else {
                     Game.MainWindow.p2MessageLabel.setText("");
                     Game.MainWindow.p1MessageLabel.setText("Click your piece to move!!");
@@ -51,7 +52,7 @@ public class Board {
 
             } else {
                 if (Game.gameBoard.p2.cordsSelected[0]) {
-                    Game.MainWindow.p2MessageLabel.setText("Click empty place to place your piece!");
+                    Game.MainWindow.p2MessageLabel.setText("Click to place your mark!!");
                 } else {
                     Game.MainWindow.p1MessageLabel.setText("");
                     Game.MainWindow.p2MessageLabel.setText("Click your piece to move!!");
@@ -92,10 +93,17 @@ public class Board {
                 player.cordsSelected[3] = true;
             }
 
+            System.out.println(player.playerNumber + " " + player.cordsSelected[2] + " " + player.cordsSelected[3] +  " \nprevious: " + player.previous_x_cord + " " + player.previous_y_cord + "\nnew cords: " + player.x_cord + " " + player.y_cord);
 
-            return ((player.x_cord < 0 || player.x_cord > 2) || (player.y_cord < 0 || player.y_cord > 2) || (board[player.x_cord][player.y_cord] != '.'))
-                    ||
-                    ((player.previous_x_cord < 0 || player.previous_x_cord > 2) || (player.previous_y_cord < 0 || player.previous_y_cord > 2) || (board[player.previous_x_cord][player.previous_y_cord] != player.mark));
+            boolean newCords = ((player.x_cord < 0 || player.x_cord > 2) || (player.y_cord < 0 || player.y_cord > 2) || (board[player.x_cord][player.y_cord] != '.'));
+            boolean previousCords = ((player.previous_x_cord < 0 || player.previous_x_cord > 2) || (player.previous_y_cord < 0 || player.previous_y_cord > 2) || (board[player.previous_x_cord][player.previous_y_cord] != player.mark));
+
+            if (previousCords) {player.cordsSelected[0] = false; player.cordsSelected[2] = false; return previousCords;}
+            if (newCords) { player.cordsSelected[1] = false; player.cordsSelected[3] = false; return newCords;}
+
+             return false; //means both are good!
+
+
         }
     }
     //AFTER GUI IMPLEMENTATION WE WOULD ONLY HAVE TO MATCH THE GUI COMPONENTS REPRESENTING CELLS WITH THE ARRAY'S ROW AND COLUMN
@@ -111,8 +119,6 @@ public class Board {
         //advance game
         else {
             int temp_x_cord = player.previous_x_cord - player.x_cord, temp_y_cord = player.previous_y_cord - player.y_cord;
-
-            System.out.println( "From validateMove if : "+ player.playerNumber + "\n" + player.previous_x_cord + " " + player.previous_y_cord + "\n" + player.x_cord + " " + player.y_cord + "\n");
 
             boolean conditionsMet = false; //flag for twiceTurn, if none of the valid move executes it remains false and penalty is incremented (in player piece).
 
