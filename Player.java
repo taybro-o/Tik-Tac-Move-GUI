@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 public class Player {
 
     String name;
@@ -32,6 +34,7 @@ public class Player {
 
     //sets player coordinate for initial and advance phase game
     void setCord(int index) {
+
         if (Game.gameBoard.moveCount < 6) {
             if (index == 0) {x_cord = 1; y_cord = 1;}
             if (index == 1) {x_cord = 1; y_cord = 2;}
@@ -77,7 +80,7 @@ public class Player {
 
         if (Game.gameBoard.moveCount < 6) {
             if(Game.gameBoard.validateMove(this)){ //RETURNS TRUE ON BAD INPUT
-                if (this.playerNumber == 1) {
+                if (playerNumber == 1) {
                     Game.MainWindow.p1MessageLabel.setText("That cell is already Taken!");
                 } else {
                     Game.MainWindow.p2MessageLabel.setText("That cell is already Taken!");
@@ -93,7 +96,24 @@ public class Player {
         else {
 
             if(Game.gameBoard.validateMove(this)) { //RETURNS TRUE ON BAD INPUT
-                Game.gameBoard.updateBoardPanelGUI();
+
+                if(!cordsSelected[0]) {
+                    if (playerNumber == 1) {
+                    Game.MainWindow.p1MessageLabel.setText("Wrong piece selection!");
+                    } else {
+                        Game.MainWindow.p2MessageLabel.setText("Wrong piece selection!");
+                    }
+                }
+                else if(!cordsSelected[1]) {
+                    if (playerNumber == 1) {
+                        Game.MainWindow.p1MessageLabel.setText("That cell is not empty!!");
+                    } else {
+                        Game.MainWindow.p2MessageLabel.setText("That cell is not empty!!");
+                    }
+                }
+
+
+
             } else if (cordsSelected[0] && cordsSelected[1]){
                 cordsSelected[0] = false; cordsSelected[1] = false;
                 cordsSelected[2] = false; cordsSelected[3] = false;
