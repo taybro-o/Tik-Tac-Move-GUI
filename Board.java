@@ -93,13 +93,13 @@ public class Board {
                 player.cordsSelected[3] = true;
             }
 
-            System.out.println(player.playerNumber + " previous: " + player.previous_x_cord + " " + player.previous_y_cord + "\nnew cords: " + player.x_cord + " " + player.y_cord);
+            System.out.println(player.playerNumber + " " + player.cordsSelected[2] + " " + player.cordsSelected[3] +  " \nprevious: " + player.previous_x_cord + " " + player.previous_y_cord + "\nnew cords: " + player.x_cord + " " + player.y_cord);
 
             boolean newCords = ((player.x_cord < 0 || player.x_cord > 2) || (player.y_cord < 0 || player.y_cord > 2) || (board[player.x_cord][player.y_cord] != '.'));
             boolean previousCords = ((player.previous_x_cord < 0 || player.previous_x_cord > 2) || (player.previous_y_cord < 0 || player.previous_y_cord > 2) || (board[player.previous_x_cord][player.previous_y_cord] != player.mark));
 
-            if (previousCords) {player.cordsSelected[0] = false; return previousCords;}
-            if (newCords) { player.cordsSelected[1] = false ; return newCords;}
+            if (previousCords) {player.cordsSelected[0] = false; player.cordsSelected[2] = false; return previousCords;}
+            if (newCords) { player.cordsSelected[1] = false; player.cordsSelected[3] = false; return newCords;}
 
              return false; //means both are good!
 

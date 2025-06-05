@@ -106,9 +106,9 @@ public class Player {
                 }
                 else if(!cordsSelected[1]) {
                     if (playerNumber == 1) {
-                        Game.MainWindow.p1MessageLabel.setText("That cell is not empty!!");
+                        Game.MainWindow.p1MessageLabel.setText("Click an empty cell!!");
                     } else {
-                        Game.MainWindow.p2MessageLabel.setText("That cell is not empty!!");
+                        Game.MainWindow.p2MessageLabel.setText("Click an empty cell!!");
                     }
                 }
 
