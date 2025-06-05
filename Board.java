@@ -140,15 +140,17 @@ public class Board {
                 }
                 if (temp_x_cord == 2 || temp_x_cord == -2) {
                     if (player.previous_x_cord < player.x_cord) {
-                        conditionsMet = true; //(temp_x_cord == -2) going down
+                       //(temp_x_cord == -2) going down
                         if (board[player.previous_x_cord + 1][player.previous_y_cord] == '.') {
+                            conditionsMet = true;
                             board[player.x_cord][player.y_cord] = player.mark;
                             board[player.previous_x_cord][player.previous_y_cord] = '.';
                         }
                     }
                     if (player.previous_y_cord > player.y_cord) {
-                        conditionsMet = true; //(temp_x_cord == 2) going up
+                         //(temp_x_cord == 2) going up
                         if (board[player.previous_x_cord - 1][player.previous_y_cord] == '.') {
+                            conditionsMet = true;
                             board[player.x_cord][player.y_cord] = player.mark;
                             board[player.previous_x_cord][player.previous_y_cord] = '.';
                         }
