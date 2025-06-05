@@ -7,4 +7,4 @@ board does validateMove(), placePiece(), checkWin()
 player does makesMove()
 
 
-beya bhi ahain baaki alaye khera khera
+

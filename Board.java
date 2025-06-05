@@ -93,8 +93,6 @@ public class Board {
                 player.cordsSelected[3] = true;
             }
 
-            System.out.println(player.playerNumber + " " + player.cordsSelected[2] + " " + player.cordsSelected[3] +  " \nprevious: " + player.previous_x_cord + " " + player.previous_y_cord + "\nnew cords: " + player.x_cord + " " + player.y_cord);
-
             boolean newCords = ((player.x_cord < 0 || player.x_cord > 2) || (player.y_cord < 0 || player.y_cord > 2) || (board[player.x_cord][player.y_cord] != '.'));
             boolean previousCords = ((player.previous_x_cord < 0 || player.previous_x_cord > 2) || (player.previous_y_cord < 0 || player.previous_y_cord > 2) || (board[player.previous_x_cord][player.previous_y_cord] != player.mark));
 
@@ -213,11 +211,11 @@ public class Board {
 
             //after player plays their move, prompt user to accept or decline twiceTurn, if yes +1 moveCount to skip the enemy's turn.
             // and reset twice turn regardless of accept or decline as players can't stack these to break game.
-            //NEEDS A COMPLETE GUI BASED REWRITE
+            //NEEDS A COMPLETE GUI BASED REWRITE //DONE
             handleTwiceTurn();
 
             //gives penalty on illegal (if the above move conditions aren't executed.) moves , totaling to gives enemy twiceTurn.
-            //NEEDS A COMPLETE GUI BASED REWRITE
+            //NEEDS A COMPLETE GUI BASED REWRITE //DONE
             handlePenalty(player, conditionsMet);
 
         }
@@ -225,7 +223,7 @@ public class Board {
     }
     //after player plays their move, prompt user to accept or decline twiceTurn, if yes +1 moveCount to skip the enemy's turn.
     // and reset twice turn regardless of accept or decline as players can't stack these to break game.
-    //NEEDS A COMPLETE GUI BASED REWRITE
+    //NEEDS A COMPLETE GUI BASED REWRITE //DONE
 
     private void handleTwiceTurn() {
         if (twiceTurn) {
@@ -246,7 +244,7 @@ public class Board {
     }
     //show in GUI you got +1 penalty, totaling 2 allows enemy to skip your turn, and after it resets to 0.
     //gives penalty on illegal (if the above move conditions aren't executed.) moves , totaling to gives enemy twiceTurn.
-    //NEEDS A COMPLETE GUI BASED REWRITE
+    //NEEDS A COMPLETE GUI BASED REWRITE //DONE
 
     private void handlePenalty(Player player, boolean conditionsMet) {
         if (!conditionsMet) {
