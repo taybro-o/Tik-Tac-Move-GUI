@@ -177,15 +177,17 @@ public class Board {
                 }
                 if (temp_y_cord == 2 || temp_y_cord == -2) {
                     if (player.previous_y_cord < player.y_cord) {
-                        conditionsMet = true; //(temp_y_cord == -2) going right
+                         //(temp_y_cord == -2) going right
                         if (board[player.previous_x_cord][player.previous_y_cord + 1] == '.') {
+                            conditionsMet = true;
                             board[player.x_cord][player.y_cord] = player.mark;
                             board[player.previous_x_cord][player.previous_y_cord] = '.';
                         }
                     }
                     if (player.previous_y_cord > player.y_cord) {
-                        conditionsMet = true; //(temp_y_cord == 2) going left
+                         //(temp_y_cord == 2) going left
                         if (board[player.previous_x_cord][player.previous_y_cord - 1] == '.') {
+                            conditionsMet = true;
                             board[player.x_cord][player.y_cord] = player.mark;
                             board[player.previous_x_cord][player.previous_y_cord] = '.';
                         }
