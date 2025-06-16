@@ -161,41 +161,39 @@ public class Board {
                     }
                 }
             }
+
             if (temp_x_cord == 0) {   //--> it means row is same
                 //column switching logic.
 
-                if (temp_y_cord == 1 || temp_y_cord == -1) {
+                if (temp_y_cord == -1) {
+                    conditionsMet = true; //(temp_y_cord == -1) going right
+                    board[player.x_cord][player.y_cord] = player.mark;
+                    board[player.previous_x_cord][player.previous_y_cord] = '.';
+                }
 
-                    if (player.previous_y_cord < player.y_cord) {
-                        conditionsMet = true; //(temp_y_cord == -1) going right
-                        board[player.x_cord][player.y_cord] = player.mark;
-                        board[player.previous_x_cord][player.previous_y_cord] = '.';
-                    }
+                if (temp_y_cord == 1) {
+                    conditionsMet = true; //(temp_y_cord == 1) going left
+                    board[player.x_cord][player.y_cord] = player.mark;
+                    board[player.previous_x_cord][player.previous_y_cord] = '.';
+                }
 
-                    if (player.previous_y_cord > player.y_cord) {
-                        conditionsMet = true; //(temp_y_cord == 1) going left
+                if (temp_y_cord == -2) {
+                    //(temp_y_cord == -2) going right
+                    if (board[player.previous_x_cord][player.previous_y_cord + 1] == '.') {
+                        conditionsMet = true;
                         board[player.x_cord][player.y_cord] = player.mark;
                         board[player.previous_x_cord][player.previous_y_cord] = '.';
                     }
                 }
-                if (temp_y_cord == 2 || temp_y_cord == -2) {
-                    if (player.previous_y_cord < player.y_cord) {
-                        //(temp_y_cord == -2) going right
-                        if (board[player.previous_x_cord][player.previous_y_cord + 1] == '.') {
-                            conditionsMet = true;
-                            board[player.x_cord][player.y_cord] = player.mark;
-                            board[player.previous_x_cord][player.previous_y_cord] = '.';
-                        }
-                    }
-                    if (player.previous_y_cord > player.y_cord) {
-                        //(temp_y_cord == 2) going left
-                        if (board[player.previous_x_cord][player.previous_y_cord - 1] == '.') {
-                            conditionsMet = true;
-                            board[player.x_cord][player.y_cord] = player.mark;
-                            board[player.previous_x_cord][player.previous_y_cord] = '.';
-                        }
+                if (temp_y_cord == 2) {
+                    //(temp_y_cord == 2) going left
+                    if (board[player.previous_x_cord][player.previous_y_cord - 1] == '.') {
+                        conditionsMet = true;
+                        board[player.x_cord][player.y_cord] = player.mark;
+                        board[player.previous_x_cord][player.previous_y_cord] = '.';
                     }
                 }
+
             }
 
             // if row or column difference isn't zero, then it's a diagonal move.
