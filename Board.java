@@ -63,7 +63,7 @@ public class Board {
 
     public void updateBoardButtonGUI() {
         for (int i = 0; i < 9; i++) {
-            Game.MainWindow.buttons[i].setText(Character.toString( Game.gameBoard.board[(i/3)][(i%3)] == '.' ? ' ' : Game.gameBoard.board[(i/3)][(i%3)] ));
+            Game.MainWindow.buttons[i].setText(Character.toString(Game.gameBoard.board[(i / 3)][(i % 3)] == '.' ? ' ' : Game.gameBoard.board[(i / 3)][(i % 3)]));
         }
     }
 
@@ -96,14 +96,23 @@ public class Board {
             boolean newCords = ((player.x_cord < 0 || player.x_cord > 2) || (player.y_cord < 0 || player.y_cord > 2) || (board[player.x_cord][player.y_cord] != '.'));
             boolean previousCords = ((player.previous_x_cord < 0 || player.previous_x_cord > 2) || (player.previous_y_cord < 0 || player.previous_y_cord > 2) || (board[player.previous_x_cord][player.previous_y_cord] != player.mark));
 
-            if (previousCords) {player.cordsSelected[0] = false; player.cordsSelected[2] = false; return previousCords;}
-            if (newCords) { player.cordsSelected[1] = false; player.cordsSelected[3] = false; return newCords;}
+            if (previousCords) {
+                player.cordsSelected[0] = false;
+                player.cordsSelected[2] = false;
+                return previousCords;
+            }
+            if (newCords) {
+                player.cordsSelected[1] = false;
+                player.cordsSelected[3] = false;
+                return newCords;
+            }
 
-             return false; //means both are good!
+            return false; //means both are good!
 
 
         }
     }
+
     //AFTER GUI IMPLEMENTATION WE WOULD ONLY HAVE TO MATCH THE GUI COMPONENTS REPRESENTING CELLS WITH THE ARRAY'S ROW AND COLUMN
     //PROBABLY JUST MAKE A METHOD THAT DOES THAT WITH IFS AND CALL IT WHERE IT CURRENTLY PLACES PIECE.
     //BY GUI COMPONENTS I MEAN: TOP_LEFT = [0][0] TOP_MIDDLE = [0][1] TOP_RIGHT = [0][2] AND SO ON...
@@ -123,41 +132,35 @@ public class Board {
             if (temp_y_cord == 0) {   //--> it means column is same
                 //row switching logic.
 
-                if (temp_x_cord == 1 || temp_x_cord == -1) {
-
-                    if (player.previous_x_cord < player.x_cord) {
-                        conditionsMet = true;  //(temp_x_cord == -1) going down
-                        board[player.x_cord][player.y_cord] = player.mark;
-                        board[player.previous_x_cord][player.previous_y_cord] = '.';
-                    }
-
-                    if (player.previous_x_cord > player.x_cord) {
-                        conditionsMet = true; //(temp_x_cord == 1) // going up
-                        board[player.x_cord][player.y_cord] = player.mark;
-                        board[player.previous_x_cord][player.previous_y_cord] = '.';
-                    }
-
+                if (temp_x_cord == -1) {
+                    conditionsMet = true;  //(temp_x_cord == -1) going down
+                    board[player.x_cord][player.y_cord] = player.mark;
+                    board[player.previous_x_cord][player.previous_y_cord] = '.';
                 }
-                if (temp_x_cord == 2 || temp_x_cord == -2) {
-                    if (player.previous_x_cord < player.x_cord) {
-                       //(temp_x_cord == -2) going down
-                        if (board[player.previous_x_cord + 1][player.previous_y_cord] == '.') {
-                            conditionsMet = true;
-                            board[player.x_cord][player.y_cord] = player.mark;
-                            board[player.previous_x_cord][player.previous_y_cord] = '.';
-                        }
+
+                if (temp_x_cord == 1) {
+                    conditionsMet = true; //(temp_x_cord == 1) // going up
+                    board[player.x_cord][player.y_cord] = player.mark;
+                    board[player.previous_x_cord][player.previous_y_cord] = '.';
+                }
+
+                if (temp_x_cord == -2) {
+                    //(temp_x_cord == -2) going down
+                    if (board[player.previous_x_cord + 1][player.previous_y_cord] == '.') {
+                        conditionsMet = true;
+                        board[player.x_cord][player.y_cord] = player.mark;
+                        board[player.previous_x_cord][player.previous_y_cord] = '.';
                     }
-                    if (player.previous_y_cord > player.y_cord) {
-                         //(temp_x_cord == 2) going up
-                        if (board[player.previous_x_cord - 1][player.previous_y_cord] == '.') {
-                            conditionsMet = true;
-                            board[player.x_cord][player.y_cord] = player.mark;
-                            board[player.previous_x_cord][player.previous_y_cord] = '.';
-                        }
+                }
+                if (temp_x_cord == 2) {
+                    //(temp_x_cord == 2) going up
+                    if (board[player.previous_x_cord - 1][player.previous_y_cord] == '.') {
+                        conditionsMet = true;
+                        board[player.x_cord][player.y_cord] = player.mark;
+                        board[player.previous_x_cord][player.previous_y_cord] = '.';
                     }
                 }
             }
-
             if (temp_x_cord == 0) {   //--> it means row is same
                 //column switching logic.
 
@@ -177,7 +180,7 @@ public class Board {
                 }
                 if (temp_y_cord == 2 || temp_y_cord == -2) {
                     if (player.previous_y_cord < player.y_cord) {
-                         //(temp_y_cord == -2) going right
+                        //(temp_y_cord == -2) going right
                         if (board[player.previous_x_cord][player.previous_y_cord + 1] == '.') {
                             conditionsMet = true;
                             board[player.x_cord][player.y_cord] = player.mark;
@@ -185,7 +188,7 @@ public class Board {
                         }
                     }
                     if (player.previous_y_cord > player.y_cord) {
-                         //(temp_y_cord == 2) going left
+                        //(temp_y_cord == 2) going left
                         if (board[player.previous_x_cord][player.previous_y_cord - 1] == '.') {
                             conditionsMet = true;
                             board[player.x_cord][player.y_cord] = player.mark;
@@ -254,12 +257,12 @@ public class Board {
         if (!conditionsMet) {
             player.penaltyCount += 1;
             JOptionPane.showMessageDialog(null,
-                    player.name+ " " + player.mark + ", You have played an illegal move, so +1 penalty, totaling 2 gives your opponent choice to skip your turn! [current penalty count: " + player.penaltyCount + "]\n");
+                    player.name + " " + player.mark + ", You have played an illegal move, so +1 penalty, totaling 2 gives your opponent choice to skip your turn! [current penalty count: " + player.penaltyCount + "]\n");
 
             //show in GUI penalty has been hit and enemy has been given his turn twice.
             if (player.penaltyCount % 2 == 0) {
                 twiceTurn = true;
-                JOptionPane.showMessageDialog(null,player.name+ " " + player.mark + ", Penalty has been hit! Your opponent will have a choice to skip your next turn!");
+                JOptionPane.showMessageDialog(null, player.name + " " + player.mark + ", Penalty has been hit! Your opponent will have a choice to skip your next turn!");
                 player.penaltyCount = 0;
             }
         }
