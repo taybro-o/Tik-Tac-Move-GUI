@@ -134,30 +134,26 @@ public class Board {
 
                 if (temp_x_cord == -1) {
                     conditionsMet = true;  //(temp_x_cord == -1) going down
-                    board[player.x_cord][player.y_cord] = player.mark;
-                    board[player.previous_x_cord][player.previous_y_cord] = '.';
+                    swapPiece(player);
                 }
 
                 if (temp_x_cord == 1) {
                     conditionsMet = true; //(temp_x_cord == 1) // going up
-                    board[player.x_cord][player.y_cord] = player.mark;
-                    board[player.previous_x_cord][player.previous_y_cord] = '.';
+                    swapPiece(player);
                 }
 
                 if (temp_x_cord == -2) {
                     //(temp_x_cord == -2) going down
                     if (board[player.previous_x_cord + 1][player.previous_y_cord] == '.') {
                         conditionsMet = true;
-                        board[player.x_cord][player.y_cord] = player.mark;
-                        board[player.previous_x_cord][player.previous_y_cord] = '.';
+                        swapPiece(player);
                     }
                 }
                 if (temp_x_cord == 2) {
                     //(temp_x_cord == 2) going up
                     if (board[player.previous_x_cord - 1][player.previous_y_cord] == '.') {
                         conditionsMet = true;
-                        board[player.x_cord][player.y_cord] = player.mark;
-                        board[player.previous_x_cord][player.previous_y_cord] = '.';
+                        swapPiece(player);
                     }
                 }
             }
@@ -167,30 +163,26 @@ public class Board {
 
                 if (temp_y_cord == -1) {
                     conditionsMet = true; //(temp_y_cord == -1) going right
-                    board[player.x_cord][player.y_cord] = player.mark;
-                    board[player.previous_x_cord][player.previous_y_cord] = '.';
+                    swapPiece(player);
                 }
 
                 if (temp_y_cord == 1) {
                     conditionsMet = true; //(temp_y_cord == 1) going left
-                    board[player.x_cord][player.y_cord] = player.mark;
-                    board[player.previous_x_cord][player.previous_y_cord] = '.';
+                    swapPiece(player);
                 }
 
                 if (temp_y_cord == -2) {
                     //(temp_y_cord == -2) going right
                     if (board[player.previous_x_cord][player.previous_y_cord + 1] == '.') {
                         conditionsMet = true;
-                        board[player.x_cord][player.y_cord] = player.mark;
-                        board[player.previous_x_cord][player.previous_y_cord] = '.';
+                        swapPiece(player);
                     }
                 }
                 if (temp_y_cord == 2) {
                     //(temp_y_cord == 2) going left
                     if (board[player.previous_x_cord][player.previous_y_cord - 1] == '.') {
                         conditionsMet = true;
-                        board[player.x_cord][player.y_cord] = player.mark;
-                        board[player.previous_x_cord][player.previous_y_cord] = '.';
+                        swapPiece(player);
                     }
                 }
 
@@ -204,14 +196,12 @@ public class Board {
 
             if (temp_x_cord == 1 && temp_y_cord == 1) {
                 conditionsMet = true; // moving by 1 unit from corner to center or center to corner.
-                board[player.x_cord][player.y_cord] = player.mark;
-                board[player.previous_x_cord][player.previous_y_cord] = '.';
+                swapPiece(player);
             }
 
             if ((temp_x_cord == 2 && temp_y_cord == 2) && (board[1][1] == '.')) {
                 conditionsMet = true; // moving by 2 units from corner to center or center to corner.
-                board[player.x_cord][player.y_cord] = player.mark;
-                board[player.previous_x_cord][player.previous_y_cord] = '.';
+                swapPiece(player);
             }
 
             //after player plays their move, prompt user to accept or decline twiceTurn, if yes +1 moveCount to skip the enemy's turn.
@@ -225,6 +215,11 @@ public class Board {
 
         }
         moveCount++;
+    }
+
+    private void swapPiece(Player player) {
+        board[player.x_cord][player.y_cord] = player.mark;
+        board[player.previous_x_cord][player.previous_y_cord] = '.';
     }
     //after player plays their move, prompt user to accept or decline twiceTurn, if yes +1 moveCount to skip the enemy's turn.
     // and reset twice turn regardless of accept or decline as players can't stack these to break game.
